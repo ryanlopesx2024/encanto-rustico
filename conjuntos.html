@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conjuntos Completos – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>.filter-mobile-toggle{display:none;width:100%;padding:.7rem 1rem;background:var(--primary);color:#fff;border:none;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-bottom:1rem}@media(max-width:900px){.filter-mobile-toggle{display:block}.filters{display:none}.filters.open{display:block;position:static}}</style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Conjuntos</span></div></div>
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1400&q=70&auto=format" alt="Conjuntos Rústicos" />
+  <div class="page-hero-content reveal"><div class="label">Ambientes Completos</div><h1>Conjuntos Rústicos</h1><p>Monte seu ambiente ideal e economize na compra completa</p></div>
+</div>
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto"><div class="tags"><span class="tag active">Todos</span><span class="tag">Sala de Jantar</span><span class="tag">Sala de Estar</span><span class="tag">Varanda</span><span class="tag">Cozinha</span><span class="tag">Escritório</span></div></div>
+</div>
+<div class="catalog-layout">
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+      <div class="filter-group"><h4>Ambiente</h4>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">16</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Sala de Jantar</label><span class="count">6</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Sala de Estar</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Varanda</label><span class="count">3</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Cozinha</label><span class="count">3</span></div>
+      </div>
+      <div class="filter-group"><h4>Preço</h4>
+        <div class="price-range"><input type="range" id="priceRange" min="2000" max="15000" value="15000" step="500" /><div class="price-labels"><span>R$ 2.000</span><span id="priceMax">R$ 15.000</span></div></div>
+      </div>
+      <div class="filter-group"><h4>Número de Peças</h4>
+        <div class="filter-option"><input type="checkbox" /><label>2 peças</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>3 peças</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>4+ peças</label></div>
+      </div>
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>16 conjuntos</strong> disponíveis</div>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
+        <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
+      </div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=70&auto=format&fit=crop&h=375" alt="Conjunto Sala Jantar" /><span class="product-badge off">-18%</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Sala de Jantar</div><h3>Mesa 6 Lugares + 6 Cadeiras Estofadas em Couro</h3><div class="materials">Peroba Rosa · Verniz Fosco · 7 peças</div><div class="product-price"><span class="old-price">R$ 6.690,00</span>R$ 5.490,00<span class="installments">12x de R$ 457,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Conjunto</button></div>
+      </div>
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&q=70&auto=format&fit=crop&h=375" alt="Conjunto Sala Estar" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Sala de Estar</div><h3>Rack + Mesa de Centro + Aparador + 2 Mesas Laterais</h3><div class="materials">Tauari + Ferro · 5 peças</div><div class="product-price">R$ 6.890,00<span class="installments">12x de R$ 574,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Conjunto</button></div>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=500&q=70&auto=format&fit=crop&h=375" alt="Conjunto Varanda" /><span class="product-badge novo">Novo</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Varanda</div><h3>Mesa + 4 Cadeiras Teca para Varanda Gourmet</h3><div class="materials">Teca Impermeabilizada · 5 peças</div><div class="product-price">R$ 4.290,00<span class="installments">12x de R$ 357,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Conjunto</button></div>
+      </div>
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=500&q=70&auto=format&fit=crop&h=375" alt="Conjunto Cozinha" /><span class="product-badge off">-15%</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Cozinha</div><h3>Mesa de Cozinha + 4 Banquetas Rústicas</h3><div class="materials">Eucalipto · Stain Escuro · 5 peças</div><div class="product-price"><span class="old-price">R$ 3.520,00</span>R$ 2.990,00<span class="installments">12x de R$ 249,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Conjunto</button></div>
+      </div>
+    </div>
+    <div class="pagination reveal"><button class="page-btn active">1</button><button class="page-btn">2</button></div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>document.getElementById('filterToggle').addEventListener('click',()=>document.getElementById('filtersPanel').classList.toggle('open'));</script>
+</body>
+</html>

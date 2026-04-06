@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesa de Jantar Rústica 6 Lugares – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    /* ── PRODUCT PAGE ──────────────────────────────────── */
+    .product-page { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    @media(max-width:768px) { .product-page { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+    /* Gallery */
+    .gallery-main { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; background: var(--warm); cursor: zoom-in; }
+    .gallery-main img { width:100%; height:100%; object-fit:cover; transition: transform .5s ease; }
+    .gallery-main:hover img { transform: scale(1.04); }
+    .gallery-thumbs { display: flex; gap: .6rem; margin-top: .8rem; flex-wrap: wrap; }
+    .gallery-thumb { width: 72px; height: 56px; border-radius: 4px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color .2s; flex-shrink: 0; }
+    .gallery-thumb.active { border-color: var(--accent); }
+    .gallery-thumb img { width:100%; height:100%; object-fit:cover; }
+
+    /* Info */
+    .product-detail-info { position: sticky; top: 90px; }
+    .product-detail-info .category-link { font-size: .75rem; color: var(--accent); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .product-detail-info h1 { font-family:'Playfair Display',serif; font-size: 1.9rem; margin: .5rem 0 .8rem; line-height: 1.2; color: var(--dark); }
+    .rating { display:flex; align-items:center; gap: .5rem; margin-bottom: 1rem; }
+    .stars { color: #e0a800; letter-spacing: .1em; }
+    .rating span { font-size: .82rem; color: #7a5f4e; }
+    .price-block { background: var(--warm); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.2rem; }
+    .price-block .main-price { font-size: 1.9rem; font-weight: 700; color: var(--primary); line-height: 1; }
+    .price-block .old-price { font-size: .9rem; color: #9e7f68; text-decoration: line-through; }
+    .price-block .discount-badge { background: #2a7a3a; color:#fff; font-size: .72rem; font-weight: 700; padding: .2rem .5rem; border-radius: 3px; margin-left: .4rem; }
+    .price-block .installments { font-size: .85rem; color: #5c3d2e; margin-top: .4rem; }
+    .price-block .pix { font-size: .82rem; color: #2a7a3a; font-weight: 600; margin-top: .3rem; }
+
+    /* Options */
+    .option-group { margin-bottom: 1.1rem; }
+    .option-group label { display:block; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--medium); margin-bottom: .5rem; }
+    .option-btns { display:flex; gap: .4rem; flex-wrap: wrap; }
+    .option-btn { padding: .45rem .9rem; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: .82rem; font-weight: 600; cursor: pointer; background: var(--white); color: var(--dark); transition: all .2s; font-family:'Lato',sans-serif; }
+    .option-btn:hover, .option-btn.active { border-color: var(--accent); background: var(--accent); color: var(--white); }
+    .option-btn.disabled { opacity: .4; cursor: not-allowed; }
+
+    .color-btns { display:flex; gap: .5rem; }
+    .color-btn { width: 28px; height: 28px; border-radius: 50%; border: 2.5px solid transparent; cursor: pointer; transition: border-color .2s, transform .2s; }
+    .color-btn:hover, .color-btn.active { border-color: var(--accent); transform: scale(1.15); }
+
+    .cta-group { display:flex; gap: .7rem; margin-top: 1.2rem; flex-wrap: wrap; }
+    .cta-group .btn { flex: 1; justify-content: center; min-width: 140px; }
+    .btn-wpp { background: #25d366; color: #fff; }
+    .btn-wpp:hover { background: #1da851; }
+
+    /* Features */
+    .feature-list { display:grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin: 1.2rem 0; }
+    .feature-item { display:flex; align-items:center; gap: .4rem; font-size: .82rem; color: var(--dark); }
+    .feature-item span.icon { color: var(--accent); }
+
+    /* Tabs */
+    .product-tabs { max-width: 1280px; margin: 2rem auto; padding: 0 1.5rem; }
+    .tab-nav { display:flex; border-bottom: 2px solid var(--border); gap: 0; margin-bottom: 1.5rem; overflow-x: auto; }
+    .tab-btn { padding: .7rem 1.4rem; font-size: .85rem; font-weight: 600; border: none; background: none; cursor: pointer; color: #7a5f4e; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; font-family:'Lato',sans-serif; transition: all .2s; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .specs-table { width:100%; border-collapse: collapse; font-size: .88rem; }
+    .specs-table tr { border-bottom: 1px solid var(--warm); }
+    .specs-table td { padding: .7rem .8rem; }
+    .specs-table td:first-child { font-weight: 700; color: var(--dark); width: 35%; background: var(--warm); }
+
+    /* ── ROOM VISUALIZER ───────────────────────────────── */
+    .visualizer-section { background: var(--dark); padding: 3rem 1.5rem; }
+    .visualizer-inner { max-width: 1280px; margin: 0 auto; }
+    .visualizer-header { text-align:center; margin-bottom: 2rem; color: var(--white); }
+    .visualizer-header h2 { font-family:'Playfair Display',serif; font-size: 2rem; color: var(--light); }
+    .visualizer-header p { opacity: .8; margin-top: .4rem; }
+
+    .visualizer-container { display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem; align-items: start; }
+    @media(max-width:768px) { .visualizer-container { grid-template-columns: 1fr; } }
+
+    /* Furniture picker */
+    .furniture-picker { background: rgba(255,255,255,.06); border-radius: 8px; padding: 1rem; border: 1px solid rgba(255,255,255,.1); }
+    .furniture-picker h4 { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--light); margin-bottom: .8rem; }
+    .furniture-items { display:flex; flex-direction:column; gap: .5rem; }
+    .furniture-item-btn { display:flex; align-items:center; gap: .6rem; padding: .55rem .7rem; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 4px; cursor: pointer; color: #c9ad96; font-size: .82rem; font-family:'Lato',sans-serif; transition: all .2s; }
+    .furniture-item-btn:hover, .furniture-item-btn.active { background: rgba(201,98,46,.25); border-color: var(--accent); color: var(--white); }
+    .furniture-item-btn .fi-icon { font-size: 1.2rem; }
+    .room-controls-bottom { margin-top: 1rem; }
+    .room-controls-bottom label { font-size: .72rem; color: #9e7f68; display:block; margin-bottom: .3rem; letter-spacing: .06em; text-transform:uppercase; }
+    .room-controls-bottom select { width:100%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: var(--white); padding: .4rem .6rem; border-radius: 4px; font-family:'Lato',sans-serif; font-size: .82rem; outline:none; margin-bottom: .6rem; }
+    .room-controls-bottom select option { background: #2C1A0E; }
+    .wall-colors { display:flex; gap: .4rem; flex-wrap:wrap; margin-bottom: .8rem; }
+    .wall-color-btn { width: 24px; height: 24px; border-radius: 4px; cursor:pointer; border: 2px solid transparent; transition: border-color .2s, transform .2s; }
+    .wall-color-btn:hover, .wall-color-btn.active { border-color: var(--accent); transform: scale(1.15); }
+
+    /* Room scene */
+    .room-scene-wrap { position: relative; border-radius: 8px; overflow: hidden; background: #1a0e08; }
+    .room-canvas-container { position: relative; width: 100%; }
+
+    /* CSS 3D Room */
+    .room-3d {
+      width: 100%;
+      aspect-ratio: 16/9;
+      perspective: 900px;
+      perspective-origin: 50% 35%;
+      position: relative;
+      overflow: hidden;
+      background: #1a0e08;
+      border-radius: 8px;
+      cursor: default;
+    }
+    .room-box {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+    .room-floor {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      transform: rotateX(40deg);
+      transform-origin: bottom center;
+      background: var(--floor-color, #c8a87a);
+      background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 1px, transparent 1px, transparent 80px),
+                        repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 1px, transparent 1px, transparent 80px);
+      transition: background-color .4s;
+    }
+    .room-wall-back {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 55%;
+      background: var(--wall-color, #f5ece0);
+      transition: background-color .4s;
+    }
+    .room-wall-left {
+      position: absolute;
+      top: 0; left: 0;
+      width: 18%;
+      height: 100%;
+      background: var(--wall-side-color, #e8ddd0);
+      clip-path: polygon(0 0, 100% 18%, 100% 100%, 0 100%);
+      transition: background-color .4s;
+    }
+    .room-wall-right {
+      position: absolute;
+      top: 0; right: 0;
+      width: 18%;
+      height: 100%;
+      background: var(--wall-side-color, #e8ddd0);
+      clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+      transition: background-color .4s;
+    }
+    .room-skirting {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: rgba(0,0,0,.1);
+      transform: rotateX(40deg);
+      transform-origin: bottom center;
+    }
+
+    /* Furniture in room */
+    .room-furniture {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      z-index: 10;
+      transition: all .5s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+    }
+    .room-furniture.hidden { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    .furniture-shadow {
+      width: var(--fw, 220px);
+      height: 30px;
+      background: radial-gradient(ellipse, rgba(0,0,0,.35) 0%, transparent 70%);
+      margin-top: -8px;
+      flex-shrink: 0;
+    }
+    .furniture-img-wrap {
+      width: var(--fw, 220px);
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.4));
+    }
+    .furniture-img-wrap img { width:100%; height:auto; object-fit:contain; }
+
+    /* Furniture SVG fallback icons */
+    .furniture-svg { width: 100%; }
+
+    /* Label overlay */
+    .room-label {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      background: rgba(44,26,14,.75);
+      color: var(--light);
+      font-size: .72rem;
+      padding: .35rem .7rem;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      backdrop-filter: blur(4px);
+    }
+    .room-hint {
+      position: absolute;
+      bottom: 1rem; right: 1rem;
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.7);
+      font-size: .7rem;
+      padding: .3rem .7rem;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Shipping */
+    .shipping-calc { background: var(--warm); border-radius: 8px; padding: 1.2rem; margin-top: 1rem; border: 1px solid var(--border); }
+    .shipping-calc h4 { font-size: .82rem; font-weight: 700; color: var(--dark); margin-bottom: .8rem; display:flex; align-items:center; gap: .4rem; }
+    .cep-row { display:flex; gap: .5rem; }
+    .cep-input { flex: 1; border: 1.5px solid var(--border); border-radius: var(--radius); padding: .5rem .8rem; font-family:'Lato',sans-serif; font-size: .85rem; color: var(--dark); background: var(--white); outline:none; transition: border-color .2s; }
+    .cep-input:focus { border-color: var(--accent); }
+    .cep-btn { padding: .5rem 1rem; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); font-size: .82rem; font-weight: 700; cursor:pointer; font-family:'Lato',sans-serif; transition: background .2s; white-space:nowrap; }
+    .cep-btn:hover { background: var(--accent); }
+    .cep-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .shipping-results { margin-top: .8rem; display:none; }
+    .shipping-results.show { display:block; }
+    .shipping-option { display:flex; align-items:center; justify-content:space-between; padding: .6rem .8rem; background: var(--white); border-radius: var(--radius); margin-bottom: .4rem; border: 1px solid var(--border); font-size: .83rem; }
+    .shipping-option:last-child { margin-bottom: 0; }
+    .shipping-name { font-weight: 700; color: var(--dark); }
+    .shipping-days { color: #7a5f4e; font-size: .78rem; }
+    .shipping-price { font-weight: 700; color: var(--primary); }
+    .shipping-address { font-size: .78rem; color: #7a5f4e; margin-top: .5rem; }
+    .shipping-address a { color: var(--accent); }
+    .shipping-loading { text-align:center; padding: .8rem; color: #7a5f4e; font-size: .82rem; }
+    .shipping-error { color: #c0392b; font-size: .82rem; padding: .5rem; }
+    .free-shipping { background: rgba(42,122,58,.1); border-color: rgba(42,122,58,.3); }
+    .free-shipping .shipping-price { color: #2a7a3a; }
+
+    /* Relacionados */
+    .related-section { background: var(--warm); padding: 3rem 1.5rem; }
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Início</a><span class="breadcrumb-sep">›</span>
+    <a href="mesas.html">Mesas</a><span class="breadcrumb-sep">›</span>
+    <span>Mesa de Jantar Rústica 6 Lugares</span>
+  </div>
+</div>
+
+<!-- PRODUCT MAIN -->
+<div style="background:var(--white)">
+  <div class="product-page">
+
+    <!-- Gallery -->
+    <div class="reveal">
+      <div class="gallery-main" id="galleryMain">
+        <img id="mainImg" src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80&auto=format" alt="Mesa de Jantar Rústica 6 Lugares" />
+      </div>
+      <div class="gallery-thumbs">
+        <div class="gallery-thumb active" onclick="changeImg(this,'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80&auto=format')"><img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=150&q=60&auto=format" /></div>
+        <div class="gallery-thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format')"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=150&q=60&auto=format" /></div>
+        <div class="gallery-thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80&auto=format')"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=150&q=60&auto=format" /></div>
+        <div class="gallery-thumb" onclick="changeImg(this,'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=800&q=80&auto=format')"><img src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=150&q=60&auto=format" /></div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-detail-info reveal reveal-delay-1">
+      <a href="mesas.html" class="category-link">Mesa de Jantar</a>
+      <h1>Mesa de Jantar Rústica 6 Lugares – Peroba Rosa</h1>
+      <div class="rating">
+        <span class="stars">★★★★★</span>
+        <span>4.9 · 47 avaliações</span>
+      </div>
+
+      <div class="price-block">
+        <div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap">
+          <span class="main-price">R$ 2.890,00</span>
+          <span class="old-price">R$ 3.200,00</span>
+          <span class="discount-badge">-10%</span>
+        </div>
+        <div class="installments">ou <strong>12x de R$ 240,84</strong> sem juros no cartão</div>
+        <div class="pix">💳 R$ 2.601,00 no Pix (10% de desconto)</div>
+      </div>
+
+      <div class="option-group">
+        <label>Tamanho</label>
+        <div class="option-btns">
+          <button class="option-btn">140×80cm</button>
+          <button class="option-btn active">180×90cm</button>
+          <button class="option-btn">220×100cm</button>
+          <button class="option-btn disabled">260×110cm</button>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label>Acabamento</label>
+        <div class="option-btns">
+          <button class="option-btn active">Natural / Cera</button>
+          <button class="option-btn">Verniz Fosco</button>
+          <button class="option-btn">Stain Escuro</button>
+          <button class="option-btn">Stain Mel</button>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <label>Cor do Pé</label>
+        <div class="color-btns">
+          <div class="color-btn active" style="background:#5C3317" title="Madeira Natural"></div>
+          <div class="color-btn" style="background:#1a1a1a" title="Preto Fosco"></div>
+          <div class="color-btn" style="background:#8B4513" title="Castanho"></div>
+          <div class="color-btn" style="background:#4a6741" title="Verde Musgo"></div>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-item"><span class="icon">🌳</span> Peroba Rosa certificada</div>
+        <div class="feature-item"><span class="icon">🔨</span> 100% Artesanal</div>
+        <div class="feature-item"><span class="icon">📏</span> Feita sob medida</div>
+        <div class="feature-item"><span class="icon">🛡️</span> Garantia de 2 anos</div>
+        <div class="feature-item"><span class="icon">🚚</span> Entrega em todo Brasil</div>
+        <div class="feature-item"><span class="icon">✏️</span> Personalização grátis</div>
+      </div>
+
+      <!-- Shipping calculator -->
+      <div class="shipping-calc">
+        <h4>🚚 Calcular Frete</h4>
+        <div class="cep-row">
+          <input class="cep-input" id="cepInput" type="text" placeholder="00000-000" maxlength="9" />
+          <button class="cep-btn" id="calcFrete">Calcular</button>
+        </div>
+        <div class="shipping-results" id="shippingResults"></div>
+      </div>
+
+      <div class="cta-group">
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Mesa%20de%20Jantar%20R%C3%BAstica%206%20Lugares." class="btn btn-wpp" target="_blank">💬 Pedir pelo WhatsApp</a>
+        <a href="orcamento.html" class="btn btn-secondary">📋 Solicitar Orçamento</a>
+      </div>
+      <div style="font-size:.75rem;color:#9e7f68;margin-top:.8rem;text-align:center">✅ Produto artesanal · Prazo de produção: 15–25 dias úteis</div>
+    </div>
+
+  </div><!-- /product-page -->
+</div>
+
+<!-- TABS -->
+<div class="product-tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="descricao">Descrição</button>
+    <button class="tab-btn" data-tab="specs">Especificações</button>
+    <button class="tab-btn" data-tab="entrega">Entrega &amp; Prazo</button>
+    <button class="tab-btn" data-tab="avaliacoes">Avaliações (47)</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-descricao">
+    <p style="line-height:1.8;color:#5c3d2e;margin-bottom:1rem">A <strong>Mesa de Jantar Rústica 6 Lugares em Peroba Rosa</strong> é uma peça artesanal única, produzida à mão por nossos marceneiros com mais de 15 anos de experiência. Cada mesa é tratada como uma obra de arte, respeitando as características naturais da madeira.</p>
+    <p style="line-height:1.8;color:#5c3d2e;margin-bottom:1rem">A Peroba Rosa é uma das madeiras mais valorizadas no Brasil, conhecida por sua beleza natural, durabilidade excepcional e veios únicos que fazem de cada peça um exemplar exclusivo. Com acabamento natural em cera de carnaúba, a madeira mantém sua beleza viva por décadas.</p>
+    <ul style="margin-left:1.2rem;color:#5c3d2e;line-height:2">
+      <li>Tampo em tábuas largas de Peroba Rosa maciça</li>
+      <li>Pés torneados em madeira maciça com encaixe de força</li>
+      <li>Acabamento natural com cera de carnaúba</li>
+      <li>Opção de personalização de medidas sem custo extra</li>
+      <li>Madeira certificada de reflorestamento</li>
+    </ul>
+  </div>
+
+  <div class="tab-panel" id="tab-specs">
+    <table class="specs-table">
+      <tr><td>Material Principal</td><td>Peroba Rosa Maciça</td></tr>
+      <tr><td>Acabamento</td><td>Natural / Cera de Carnaúba (personalizável)</td></tr>
+      <tr><td>Dimensões Padrão</td><td>180 × 90 × 78 cm (C × L × A)</td></tr>
+      <tr><td>Espessura do Tampo</td><td>5 cm</td></tr>
+      <tr><td>Número de Lugares</td><td>6 pessoas</td></tr>
+      <tr><td>Capacidade de Peso</td><td>Até 120 kg</td></tr>
+      <tr><td>Peso Aproximado</td><td>48 kg</td></tr>
+      <tr><td>Prazo de Produção</td><td>15 a 25 dias úteis</td></tr>
+      <tr><td>Garantia</td><td>2 anos contra defeitos de fabricação</td></tr>
+      <tr><td>Personalização</td><td>Sim – medidas, acabamento e cor do pé</td></tr>
+    </table>
+  </div>
+
+  <div class="tab-panel" id="tab-entrega">
+    <div style="display:grid;gap:1rem;max-width:560px">
+      <div style="padding:1rem;background:var(--warm);border-radius:8px;border-left:4px solid var(--accent)">
+        <strong style="display:block;margin-bottom:.4rem">📦 Prazo de Produção</strong>
+        <span style="font-size:.88rem;color:#5c3d2e">Todos os móveis são produzidos sob encomenda. O prazo de produção é de <strong>15 a 25 dias úteis</strong> após a confirmação do pedido e pagamento.</span>
+      </div>
+      <div style="padding:1rem;background:var(--warm);border-radius:8px;border-left:4px solid var(--accent)">
+        <strong style="display:block;margin-bottom:.4rem">🚚 Frete</strong>
+        <span style="font-size:.88rem;color:#5c3d2e">Entregamos em todo o Brasil via transportadoras especializadas em móveis. <strong>Frete grátis</strong> para compras acima de R$ 2.000 em capitais selecionadas. Calcule o frete inserindo seu CEP acima.</span>
+      </div>
+      <div style="padding:1rem;background:var(--warm);border-radius:8px;border-left:4px solid var(--accent)">
+        <strong style="display:block;margin-bottom:.4rem">🔧 Montagem</strong>
+        <span style="font-size:.88rem;color:#5c3d2e">Os móveis são entregados embalados com muito cuidado. A montagem é simples e acompanha manual ilustrado. Serviço de montagem disponível para capitais mediante consulta.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-avaliacoes">
+    <div style="display:grid;gap:1rem;max-width:700px">
+      <div style="background:var(--warm);border-radius:8px;padding:1.2rem;border-left:4px solid var(--accent)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><strong>Mariana S.</strong><span style="color:#e0a800">★★★★★</span></div>
+        <p style="font-size:.88rem;color:#5c3d2e;line-height:1.7;font-style:italic">"Mesa incrível, superou todas as expectativas. A madeira é linda e o acabamento impecável. Toda a família adorou!"</p>
+        <span style="font-size:.72rem;color:#9e7f68">São Paulo, SP · Compra verificada</span>
+      </div>
+      <div style="background:var(--warm);border-radius:8px;padding:1.2rem;border-left:4px solid var(--accent)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.4rem"><strong>Carlos A.</strong><span style="color:#e0a800">★★★★★</span></div>
+        <p style="font-size:.88rem;color:#5c3d2e;line-height:1.7;font-style:italic">"Chegou no prazo prometido, embalada com muito cuidado. A qualidade da Peroba Rosa é excepcional. Vale cada centavo."</p>
+        <span style="font-size:.72rem;color:#9e7f68">Belo Horizonte, MG · Compra verificada</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM VISUALIZER -->
+<div class="visualizer-section">
+  <div class="visualizer-inner">
+    <div class="visualizer-header reveal">
+      <div class="label" style="color:var(--accent)">Experimente antes de comprar</div>
+      <h2>Visualize na Sua Sala</h2>
+      <p>Arraste móveis do catálogo para a sala · Clique para selecionar · R = Rotacionar · Del = Remover</p>
+    </div>
+    <div class="visualizer-container reveal">
+
+      <!-- Full drag-and-drop visualizer (replaces old picker) -->
+      <div style="grid-column:1/-1;width:100%">
+        <div style="display:grid;grid-template-columns:180px 1fr;gap:1rem;align-items:start">
+
+          <!-- Catalog -->
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem;overflow-y:auto;max-height:540px">
+            <h4 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:.8rem">Arraste para a sala</h4>
+            <div id="vizCatalog" style="display:flex;flex-direction:column;gap:.5rem"></div>
+            <div style="margin-top:1rem;border-top:1px solid rgba(255,255,255,.1);padding-top:.8rem">
+              <h4 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:.6rem">Parede</h4>
+              <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem" id="wallColorPicker"></div>
+              <h4 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:.6rem">Piso</h4>
+              <div style="display:flex;gap:.4rem;flex-wrap:wrap" id="floorColorPicker"></div>
+            </div>
+            <div style="margin-top:.8rem;font-size:.65rem;color:rgba(255,255,255,.4);line-height:1.5">
+              R = Rotacionar<br>Del = Remover<br>D = Duplicar<br>Setas = Mover
+            </div>
+          </div>
+
+          <!-- Room -->
+          <div id="vizRoomWrap" style="position:relative;border-radius:8px;overflow:hidden;background:#0d0d1a;display:flex;align-items:center;justify-content:center;min-height:400px">
+            <div id="dropOverlay" style="position:absolute;inset:0;background:rgba(201,98,46,.12);border:3px dashed var(--accent);display:none;align-items:center;justify-content:center;color:var(--accent);font-size:1rem;z-index:200;border-radius:8px">Solte aqui ✓</div>
+            <div id="vizRoom" style="position:relative;width:640px;height:440px;transform:perspective(900px) rotateX(10deg);transform-origin:center bottom">
+              <!-- walls and floor drawn by JS -->
+            </div>
+            <div id="vizStatus" style="position:absolute;bottom:.6rem;left:0;right:0;text-align:center;font-size:.68rem;color:rgba(255,255,255,.3)">Nenhum móvel selecionado</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- RELACIONADOS -->
+<div class="related-section">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="section-header reveal"><div class="label">Complete seu ambiente</div><h2>Produtos Relacionados</h2><div class="divider"></div></div>
+    <div class="product-grid" style="margin-top:2rem">
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=500&q=70&auto=format&fit=crop&h=375" alt="Cadeiras" /></div>
+        <div class="product-info"><div class="category">Cadeiras</div><h3>Kit 6 Cadeiras de Jantar Rústicas</h3><div class="product-price">R$ 2.940,00<span class="installments">12x de R$ 245,00</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aaa92b84?w=500&q=70&auto=format&fit=crop&h=375" alt="Aparador" /></div>
+        <div class="product-info"><div class="category">Aparador</div><h3>Aparador Rústico 3 Portas – Peroba Rosa</h3><div class="product-price">R$ 2.190,00<span class="installments">12x de R$ 182,50</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=70&auto=format&fit=crop&h=375" alt="Conjunto" /></div>
+        <div class="product-info"><div class="category">Conjunto</div><h3>Mesa + 6 Cadeiras Estofadas em Couro</h3><div class="product-price">R$ 5.490,00<span class="installments">12x de R$ 457,50</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>
+// ── Gallery ───────────────────────────────────────────────
+function changeImg(thumb, src) {
+  document.getElementById('mainImg').src = src;
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+
+// ── Option buttons ────────────────────────────────────────
+document.querySelectorAll('.option-btn:not(.disabled)').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.option-btns').querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.querySelectorAll('.color-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.color-btns').querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── Tabs ──────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Correios / Frete Calculator ───────────────────────────
+const CEP_ORIGEM = '01310100'; // SP - substitua pelo CEP da loja
+const SHIPPING_TABLE = {
+  // [estado]: [prazo PAC, prazo SEDEX, frete PAC, frete SEDEX]
+  'SP': [5,  2,  0,    89.90],
+  'RJ': [6,  2,  0,    99.90],
+  'MG': [6,  2,  0,    94.90],
+  'ES': [7,  3,  69.90, 109.90],
+  'PR': [7,  3,  74.90, 114.90],
+  'SC': [8,  3,  79.90, 119.90],
+  'RS': [9,  4,  84.90, 124.90],
+  'MS': [9,  4,  89.90, 129.90],
+  'MT': [10, 5, 99.90, 149.90],
+  'GO': [9,  4, 89.90, 139.90],
+  'DF': [8,  3, 84.90, 129.90],
+  'BA': [10, 5, 99.90, 154.90],
+  'PE': [11, 5,109.90, 164.90],
+  'CE': [12, 6,114.90, 169.90],
+  'MA': [13, 6,119.90, 174.90],
+  'PA': [14, 7,129.90, 184.90],
+  'AM': [16, 8,149.90, 199.90],
+};
+const PRODUCT_VALUE = 2890;
+const FREE_SHIPPING_THRESHOLD = 2000;
+
+function formatCEP(v) {
+  return v.replace(/\D/g,'').replace(/(\d{5})(\d)/,'$1-$2').slice(0,9);
+}
+const cepInput = document.getElementById('cepInput');
+cepInput.addEventListener('input', () => { cepInput.value = formatCEP(cepInput.value); });
+
+document.getElementById('calcFrete').addEventListener('click', async () => {
+  const rawCEP = cepInput.value.replace(/\D/g,'');
+  if (rawCEP.length !== 8) { showShippingError('CEP inválido. Digite os 8 dígitos.'); return; }
+  const btn = document.getElementById('calcFrete');
+  btn.disabled = true; btn.textContent = '…';
+  showShippingLoading();
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${rawCEP}/json/`);
+    const data = await res.json();
+    if (data.erro) { showShippingError('CEP não encontrado. Verifique e tente novamente.'); return; }
+    const uf = data.uf;
+    const table = SHIPPING_TABLE[uf] || [15, 7, 139.90, 199.90];
+    const [pacDays, sedexDays, pacPrice, sedexPrice] = table;
+    const freeShipping = PRODUCT_VALUE >= FREE_SHIPPING_THRESHOLD;
+    showShippingOptions(data, uf, pacDays, sedexDays, freeShipping ? 0 : pacPrice, sedexPrice, freeShipping);
+  } catch(e) {
+    showShippingError('Não foi possível calcular. Tente novamente ou entre em contato.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Calcular';
+  }
+});
+
+function showShippingLoading() {
+  const el = document.getElementById('shippingResults');
+  el.classList.add('show');
+  el.innerHTML = '<div class="shipping-loading">🔍 Consultando…</div>';
+}
+function showShippingError(msg) {
+  const el = document.getElementById('shippingResults');
+  el.classList.add('show');
+  el.innerHTML = `<div class="shipping-error">⚠️ ${msg}</div>`;
+}
+function showShippingOptions(addr, uf, pacDays, sedexDays, pacPrice, sedexPrice, freeShipping) {
+  const el = document.getElementById('shippingResults');
+  const pacFree = freeShipping || pacPrice === 0;
+  el.innerHTML = `
+    <div class="shipping-option ${pacFree ? 'free-shipping' : ''}">
+      <div><div class="shipping-name">📦 PAC – Correios</div><div class="shipping-days">Até ${pacDays} dias úteis após produção</div></div>
+      <div class="shipping-price">${pacFree ? '🎉 GRÁTIS' : 'R$ ' + pacPrice.toFixed(2).replace('.',',')}</div>
+    </div>
+    <div class="shipping-option">
+      <div><div class="shipping-name">⚡ SEDEX – Correios</div><div class="shipping-days">Até ${sedexDays} dias úteis após produção</div></div>
+      <div class="shipping-price">R$ ${sedexPrice.toFixed(2).replace('.',',')}</div>
+    </div>
+    <div class="shipping-address">
+      📍 Entregando para: <strong>${addr.logradouro ? addr.logradouro + ', ' : ''}${addr.bairro ? addr.bairro + ' – ' : ''}${addr.localidade}/${uf}</strong>
+      <br>⚠️ Prazo conta após a produção (15–25 dias úteis). <a href="orcamento.html">Dúvidas? Fale conosco.</a>
+    </div>
+  `;
+  el.classList.add('show');
+}
+
+// ══════════════════════════════════════════════════════════
+//  ROOM VISUALIZER  – Drag-and-drop completo
+// ══════════════════════════════════════════════════════════
+(function() {
+  const CATALOG = [
+    { type:'mesa',      emoji:'🍽️', label:'Mesa de Jantar',  w:130, h:80, color:'#8B5E3C' },
+    { type:'sofa',      emoji:'🛋️', label:'Sofá 3 Lugares',   w:150, h:72, color:'#8B6340' },
+    { type:'cadeira',   emoji:'🪑', label:'Cadeira/Poltrona', w:65,  h:65, color:'#6B4E2A' },
+    { type:'rack',      emoji:'📺', label:'Rack para TV',     w:110, h:30, color:'#3a2a1a' },
+    { type:'estante',   emoji:'📚', label:'Estante',          w:80,  h:32, color:'#7A5230' },
+    { type:'aparador',  emoji:'🖼️', label:'Aparador',         w:110, h:40, color:'#9B7248' },
+    { type:'plant',     emoji:'🌿', label:'Planta',           w:38,  h:38, color:'#4a7c59' },
+    { type:'lamp',      emoji:'💡', label:'Luminária',        w:28,  h:28, color:'#C4902A' },
+    { type:'tapete',    emoji:'🟫', label:'Tapete',           w:140, h:100,color:'#c8a87a' },
+  ];
+  const WALL_COLORS  = ['#f5ece0','#dce8e0','#e0e8f0','#f0e8e0','#f0f0e8','#2e3440'];
+  const FLOOR_COLORS = ['#c8a87a','#8b6340','#d0c8b8','#b0b0b0','#f5f5f5','#4a3828'];
+
+  let wallColor  = WALL_COLORS[0];
+  let floorColor = FLOOR_COLORS[0];
+  let selected   = null;
+  let idCounter  = 0;
+  let dragData   = null;
+
+  const room    = document.getElementById('vizRoom');
+  const wrap    = document.getElementById('vizRoomWrap');
+  const overlay = document.getElementById('dropOverlay');
+  const status  = document.getElementById('vizStatus');
+
+  // ─── Draw room background ─────────────────────────────
+  function drawRoom() {
+    room.style.cssText = `
+      position:relative; width:640px; height:440px;
+      transform:perspective(900px) rotateX(10deg); transform-origin:center bottom;
+      border:14px solid #3a2410; border-radius:4px;
+      box-shadow:0 0 60px rgba(0,0,0,.8);
+      background:${wallColor};
+      overflow:visible;
+    `;
+    // floor plane
+    let fl = document.getElementById('vizFloor');
+    if (!fl) { fl = document.createElement('div'); fl.id = 'vizFloor'; room.prepend(fl); }
+    fl.style.cssText = `
+      position:absolute; bottom:0; left:0; right:0; height:50%;
+      transform:rotateX(45deg); transform-origin:bottom center;
+      background:${floorColor};
+      background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 1px,transparent 1px,transparent 60px),
+                       repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 1px,transparent 1px,transparent 60px);
+      pointer-events:none;
+    `;
+    // baseboard
+    ['top','left','right','bottom'].forEach(side => {
+      let b = document.getElementById('vizBase'+side);
+      if (!b) { b=document.createElement('div'); b.id='vizBase'+side; room.prepend(b); }
+      const s = { top:'0 0 auto 0', left:'0 auto 0 0', right:'0 0 0 auto', bottom:'auto 0 0 0' }[side];
+      const dim = (side==='top'||side==='bottom') ? 'height:5px;left:0;right:0' : 'width:5px;top:0;bottom:0';
+      b.style.cssText = `position:absolute;inset:${s};${dim};background:rgba(0,0,0,.15);pointer-events:none;`;
+    });
+  }
+
+  // ─── Build catalog sidebar ────────────────────────────
+  const catDiv = document.getElementById('vizCatalog');
+  CATALOG.forEach(item => {
+    const el = document.createElement('div');
+    el.style.cssText = `background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.5rem .7rem;cursor:grab;display:flex;align-items:center;gap:.5rem;color:#c9ad96;font-size:.78rem;font-family:'Lato',sans-serif;transition:all .2s;user-select:none`;
+    el.innerHTML = `<span style="font-size:1.3rem">${item.emoji}</span><div><div style="font-weight:700">${item.label}</div><div style="font-size:.65rem;opacity:.6">${item.w}×${item.h}cm</div></div>`;
+    el.draggable = true;
+    el.addEventListener('mouseenter',()=>{ el.style.borderColor='var(--accent)'; el.style.background='rgba(201,98,46,.15)'; });
+    el.addEventListener('mouseleave',()=>{ el.style.borderColor='rgba(255,255,255,.1)'; el.style.background='rgba(255,255,255,.05)'; });
+    el.addEventListener('dragstart', e => {
+      dragData = item;
+      e.dataTransfer.effectAllowed = 'copy';
+    });
+    // also click to add at center
+    el.addEventListener('dblclick', () => addFurniture(item, room.offsetWidth/2 - item.w/2, room.offsetHeight/2 - item.h/2));
+    catDiv.appendChild(el);
+  });
+
+  // ─── Color pickers ────────────────────────────────────
+  function buildPicker(containerId, colors, setCb) {
+    const c = document.getElementById(containerId);
+    colors.forEach((col, i) => {
+      const b = document.createElement('div');
+      b.style.cssText = `width:22px;height:22px;border-radius:4px;background:${col};cursor:pointer;border:2px solid ${i===0?'var(--accent)':'transparent'};transition:border-color .2s,transform .2s;flex-shrink:0`;
+      b.addEventListener('click',()=>{
+        c.querySelectorAll('div').forEach(x=>x.style.borderColor='transparent');
+        b.style.borderColor='var(--accent)';
+        setCb(col);
+      });
+      c.appendChild(b);
+    });
+  }
+  buildPicker('wallColorPicker',  WALL_COLORS,  c=>{ wallColor=c; drawRoom(); });
+  buildPicker('floorColorPicker', FLOOR_COLORS, c=>{ floorColor=c; drawRoom(); });
+
+  // ─── Drop zone ────────────────────────────────────────
+  wrap.addEventListener('dragover', e => { e.preventDefault(); overlay.style.display='flex'; });
+  wrap.addEventListener('dragleave', () => { overlay.style.display='none'; });
+  wrap.addEventListener('drop', e => {
+    e.preventDefault(); overlay.style.display='none';
+    if (!dragData) return;
+    const rr = room.getBoundingClientRect();
+    const sx = room.offsetWidth / rr.width;
+    const sy = room.offsetHeight / rr.height;
+    let x = (e.clientX - rr.left) * sx - dragData.w/2;
+    let y = (e.clientY - rr.top)  * sy - dragData.h/2;
+    x = Math.max(0, Math.min(room.offsetWidth  - dragData.w, x));
+    y = Math.max(0, Math.min(room.offsetHeight - dragData.h, y));
+    addFurniture(dragData, x, y);
+    dragData = null;
+  });
+
+  // ─── Add furniture ────────────────────────────────────
+  function addFurniture(data, x, y, rot=0) {
+    const el = document.createElement('div');
+    el.id = 'vf'+(++idCounter);
+    el.dataset.w   = data.w; el.dataset.h = data.h;
+    el.dataset.rot = rot; el.dataset.label = data.label;
+    el.style.cssText = `
+      position:absolute; left:${x}px; top:${y}px;
+      width:${data.w}px; height:${data.h}px;
+      background:linear-gradient(135deg,${lighten(data.color,18)},${data.color},${darken(data.color,14)});
+      border-radius:4px; cursor:move; user-select:none;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      transform:rotate(${rot}deg); transform-origin:center center;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);
+      transition:box-shadow .15s; z-index:10;
+    `;
+    const fontSize = Math.min(data.w, data.h) * 0.4;
+    el.innerHTML = `
+      <span style="font-size:${fontSize}px;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">${data.emoji}</span>
+      <span style="font-size:${Math.max(8,fontSize*0.45)}px;color:rgba(0,0,0,.5);font-weight:700;text-transform:uppercase;letter-spacing:.04em;pointer-events:none;line-height:1;margin-top:2px">${data.label}</span>
+    `;
+    // Shadow pseudo
+    const shadow = document.createElement('div');
+    shadow.style.cssText = `position:absolute;bottom:-10px;left:6px;right:-6px;height:14px;background:rgba(0,0,0,.2);filter:blur(5px);border-radius:50%;z-index:-1;pointer-events:none`;
+    el.appendChild(shadow);
+
+    makeDraggable(el);
+    el.addEventListener('mousedown', e => { e.stopPropagation(); selectEl(el); });
+    room.appendChild(el);
+
+    // Entrance anim
+    el.style.opacity='0'; el.style.transform=`rotate(${rot}deg) scale(0.5)`;
+    requestAnimationFrame(()=>{
+      el.style.transition='opacity .25s,transform .25s';
+      el.style.opacity='1'; el.style.transform=`rotate(${rot}deg) scale(1)`;
+      setTimeout(()=>el.style.transition='',300);
+    });
+    selectEl(el);
+    return el;
+  }
+
+  // ─── Select ──────────────────────────────────────────
+  function selectEl(el) {
+    if (selected) { selected.style.outline='none'; }
+    selected = el;
+    if (el) {
+      el.style.outline='2px dashed var(--accent)'; el.style.outlineOffset='3px'; el.style.zIndex=100;
+      status.textContent = `${el.dataset.label} · R = rotacionar · Del = remover · D = duplicar`;
+    } else { status.textContent = 'Nenhum móvel selecionado — arraste do catálogo'; }
+  }
+  room.addEventListener('mousedown', e => { if(e.target===room||e.target.id.startsWith('vizBase')||e.target.id==='vizFloor') selectEl(null); });
+
+  // ─── Drag within room ─────────────────────────────────
+  function makeDraggable(el) {
+    let sx,sy,ex,ey;
+    el.addEventListener('mousedown', e => {
+      if (e.button!==0) return; e.preventDefault();
+      sx=e.clientX; sy=e.clientY;
+      ex=parseFloat(el.style.left); ey=parseFloat(el.style.top);
+      el.style.zIndex=200;
+      const mm = e2 => {
+        const rr=room.getBoundingClientRect();
+        const scx=room.offsetWidth/rr.width, scy=room.offsetHeight/rr.height;
+        let nx = ex+(e2.clientX-sx)*scx, ny = ey+(e2.clientY-sy)*scy;
+        nx=Math.max(0,Math.min(room.offsetWidth -parseFloat(el.dataset.w),nx));
+        ny=Math.max(0,Math.min(room.offsetHeight-parseFloat(el.dataset.h),ny));
+        el.style.left=nx+'px'; el.style.top=ny+'px';
+      };
+      const mu = () => { el.style.zIndex=selected===el?100:10; document.removeEventListener('mousemove',mm); document.removeEventListener('mouseup',mu); };
+      document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
+    });
+    // Touch
+    el.addEventListener('touchstart', e => {
+      const t=e.touches[0]; sx=t.clientX; sy=t.clientY;
+      ex=parseFloat(el.style.left); ey=parseFloat(el.style.top);
+      const tm = e2 => {
+        const t2=e2.touches[0], rr=room.getBoundingClientRect();
+        const scx=room.offsetWidth/rr.width, scy=room.offsetHeight/rr.height;
+        let nx=ex+(t2.clientX-sx)*scx, ny=ey+(t2.clientY-sy)*scy;
+        nx=Math.max(0,Math.min(room.offsetWidth -parseFloat(el.dataset.w),nx));
+        ny=Math.max(0,Math.min(room.offsetHeight-parseFloat(el.dataset.h),ny));
+        el.style.left=nx+'px'; el.style.top=ny+'px';
+      };
+      el.addEventListener('touchmove',tm,{passive:true});
+      el.addEventListener('touchend',()=>el.removeEventListener('touchmove',tm),{once:true});
+    },{passive:true});
+  }
+
+  // ─── Keyboard ─────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (!selected || e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
+    if (e.key==='r'||e.key==='R') { const r2=((parseInt(selected.dataset.rot)||0)+90)%360; selected.dataset.rot=r2; selected.style.transform=`rotate(${r2}deg)`; }
+    if (e.key==='Delete'||e.key==='Backspace') { selected.style.opacity='0'; selected.style.transform+=' scale(0.5)'; const rm=selected; selectEl(null); setTimeout(()=>rm.remove(),200); }
+    if (e.key==='d'||e.key==='D') {
+      const item = CATALOG.find(c=>c.label===selected.dataset.label) || { w:parseInt(selected.dataset.w), h:parseInt(selected.dataset.h), emoji:'🪑', color:'#8B5E3C', label:selected.dataset.label };
+      addFurniture(item, Math.min(parseFloat(selected.style.left)+18, room.offsetWidth-item.w), Math.min(parseFloat(selected.style.top)+18, room.offsetHeight-item.h), parseInt(selected.dataset.rot)||0);
+    }
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) {
+      e.preventDefault(); const step=e.shiftKey?12:3;
+      let x=parseFloat(selected.style.left), y=parseFloat(selected.style.top);
+      if(e.key==='ArrowUp')    y-=step; if(e.key==='ArrowDown')  y+=step;
+      if(e.key==='ArrowLeft')  x-=step; if(e.key==='ArrowRight') x+=step;
+      x=Math.max(0,Math.min(room.offsetWidth -parseFloat(selected.dataset.w),x));
+      y=Math.max(0,Math.min(room.offsetHeight-parseFloat(selected.dataset.h),y));
+      selected.style.left=x+'px'; selected.style.top=y+'px';
+    }
+  });
+
+  // ─── Color helpers ────────────────────────────────────
+  function hexToRgb(h){ h=h.replace('#',''); if(h.length===3)h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return[(n>>16)&255,(n>>8)&255,n&255]; }
+  function rgbToHex(r,g,b){return'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');}
+  function lighten(h,p){const[r,g,b]=hexToRgb(h);return rgbToHex(r+p*2.55,g+p*2.55,b+p*2.55);}
+  function darken(h,p){const[r,g,b]=hexToRgb(h);return rgbToHex(r-p*2.55,g-p*2.55,b-p*2.55);}
+
+  // ─── Init ─────────────────────────────────────────────
+  drawRoom();
+  // Seed initial furniture
+  setTimeout(()=>{
+    addFurniture(CATALOG[0], 255, 180, 0); // mesa jantar
+    addFurniture(CATALOG[1], 220, 300, 0); // sofa
+    addFurniture(CATALOG[6], 560, 380, 0); // plant
+    addFurniture(CATALOG[3], 260, 20,  0); // rack
+    selectEl(null);
+  }, 400);
+})();
+</script>
+</body>
+</html>

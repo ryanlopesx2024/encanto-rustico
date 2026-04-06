@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitar Orçamento – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    .orcamento-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+    .page-title { font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--dark); margin-bottom:.4rem; }
+    .page-subtitle { color:#7a5f4e; font-size:.95rem; margin-bottom:2.5rem; }
+
+    .form-card { background:var(--white); border-radius:10px; box-shadow:var(--shadow); padding:2rem; margin-bottom:1.5rem; }
+    .form-card h2 { font-family:'Playfair Display',serif; font-size:1.25rem; color:var(--dark); margin-bottom:1.5rem; display:flex; align-items:center; gap:.6rem; }
+    .form-section-icon { font-size:1.2rem; }
+
+    .form-row { display:grid; gap:1rem; grid-template-columns:1fr 1fr; }
+    @media(max-width:600px){ .form-row{ grid-template-columns:1fr; } }
+    .form-row-3 { display:grid; gap:1rem; grid-template-columns:1fr 1fr 1fr; }
+    @media(max-width:700px){ .form-row-3{ grid-template-columns:1fr 1fr; } }
+
+    .fgroup { display:flex; flex-direction:column; gap:.35rem; }
+    .fgroup label { font-size:.78rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--medium); }
+    .fgroup input, .fgroup select, .fgroup textarea {
+      border:1.5px solid var(--border); border-radius:var(--radius);
+      padding:.6rem .85rem; font-family:'Lato',sans-serif; font-size:.88rem;
+      color:var(--dark); background:var(--white); outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus {
+      border-color:var(--accent); box-shadow:0 0 0 3px rgba(201,98,46,.1);
+    }
+    .fgroup textarea { resize:vertical; min-height:90px; }
+    .fgroup select option { background:var(--white); }
+
+    /* Item list */
+    .item-list { display:flex; flex-direction:column; gap:.8rem; }
+    .item-row { display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:.6rem; align-items:end; }
+    @media(max-width:600px){ .item-row{ grid-template-columns:1fr 1fr; } }
+    .remove-item { background:none; border:1.5px solid var(--border); color:#9e7f68; border-radius:var(--radius); padding:.6rem .7rem; cursor:pointer; font-size:.9rem; transition:all .2s; }
+    .remove-item:hover { border-color:#c0392b; color:#c0392b; }
+    .add-item-btn { display:flex; align-items:center; gap:.5rem; background:none; border:1.5px dashed var(--border); color:var(--medium); padding:.65rem 1rem; border-radius:var(--radius); cursor:pointer; font-size:.85rem; font-weight:600; font-family:'Lato',sans-serif; width:100%; justify-content:center; transition:all .2s; margin-top:.5rem; }
+    .add-item-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* Frete card */
+    .frete-card { background:var(--warm); border-radius:10px; padding:1.5rem; border:1px solid var(--border); }
+    .frete-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--dark); margin-bottom:1rem; }
+    .cep-group { display:flex; gap:.6rem; align-items:flex-end; }
+    .cep-group .fgroup { flex:1; }
+    .calc-btn { padding:.6rem 1.2rem; background:var(--primary); color:#fff; border:none; border-radius:var(--radius); font-size:.82rem; font-weight:700; cursor:pointer; font-family:'Lato',sans-serif; white-space:nowrap; transition:background .2s; height:38px; align-self:flex-end; }
+    .calc-btn:hover { background:var(--accent); }
+    .calc-btn:disabled { opacity:.5; cursor:not-allowed; }
+    .frete-results { margin-top:1rem; }
+    .frete-option { display:flex; align-items:center; justify-content:space-between; padding:.65rem .85rem; background:var(--white); border-radius:var(--radius); margin-bottom:.4rem; border:1.5px solid var(--border); cursor:pointer; transition:all .2s; }
+    .frete-option:hover { border-color:var(--accent); }
+    .frete-option.selected { border-color:var(--accent); background:rgba(201,98,46,.06); }
+    .frete-option input[type=radio] { accent-color:var(--accent); margin-right:.5rem; }
+    .frete-name { font-weight:700; font-size:.85rem; color:var(--dark); }
+    .frete-company { font-size:.72rem; color:#9e7f68; }
+    .frete-days { font-size:.75rem; color:#7a5f4e; }
+    .frete-price { font-weight:700; color:var(--primary); font-size:.95rem; }
+    .frete-price.free { color:#2a7a3a; }
+    .frete-error { color:#c0392b; font-size:.82rem; padding:.5rem; }
+    .frete-loading { text-align:center; color:#9e7f68; font-size:.83rem; padding:.8rem; }
+    .frete-address { font-size:.75rem; color:#9e7f68; margin-top:.5rem; }
+    .me-token-notice { background:rgba(201,98,46,.08); border:1px solid rgba(201,98,46,.3); border-radius:6px; padding:.7rem 1rem; font-size:.78rem; color:#5c3d2e; margin-bottom:.8rem; }
+    .me-token-notice a { color:var(--accent); font-weight:700; }
+
+    /* Resumo */
+    .summary-box { background:var(--dark); color:var(--white); border-radius:10px; padding:1.5rem; }
+    .summary-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--light); margin-bottom:1rem; }
+    .summary-line { display:flex; justify-content:space-between; font-size:.88rem; padding:.4rem 0; border-bottom:1px solid rgba(255,255,255,.08); color:#c9ad96; }
+    .summary-line:last-child { border:none; }
+    .summary-line.total { color:var(--white); font-weight:700; font-size:1rem; padding-top:.6rem; }
+    .summary-line.frete { color:#c9ad96; }
+    .summary-line.frete .free { color:#6dd17a; }
+
+    /* Submit */
+    .submit-section { text-align:center; margin-top:1rem; }
+    .submit-btn { padding:1rem 3rem; font-size:1rem; border-radius:var(--radius); }
+    .terms { font-size:.75rem; color:#9e7f68; margin-top:.8rem; }
+    .success-msg { display:none; background:#eafaf1; border:1.5px solid #27ae60; border-radius:8px; padding:1.5rem; text-align:center; color:#1e8449; }
+    .success-msg h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:.5rem; }
+
+    /* Steps indicator */
+    .steps { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:2rem; flex-wrap:wrap; }
+    .step { display:flex; align-items:center; gap:.5rem; font-size:.8rem; font-weight:600; color:#9e7f68; }
+    .step.active { color:var(--primary); }
+    .step.done { color:var(--accent); }
+    .step-num { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; background:var(--warm); border:2px solid var(--border); flex-shrink:0; }
+    .step.active .step-num { background:var(--primary); border-color:var(--primary); color:#fff; }
+    .step.done .step-num { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .step-sep { width:32px; height:2px; background:var(--border); margin:0 .3rem; }
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Solicitar Orçamento</span></div></div>
+
+<div style="background:var(--warm);padding:2rem 1.5rem 0">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="steps reveal">
+      <div class="step done"><div class="step-num">✓</div>Produto</div>
+      <div class="step-sep"></div>
+      <div class="step active"><div class="step-num">2</div>Dados</div>
+      <div class="step-sep"></div>
+      <div class="step"><div class="step-num">3</div>Frete</div>
+      <div class="step-sep"></div>
+      <div class="step"><div class="step-num">4</div>Confirmação</div>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--warm);padding-bottom:1.5rem">
+  <div class="orcamento-wrap">
+    <h1 class="page-title reveal">Solicitar Orçamento</h1>
+    <p class="page-subtitle reveal">Preencha os dados abaixo e nossa equipe entrará em contato em até 24h.</p>
+
+    <div id="successMsg" class="success-msg">
+      <h3>✅ Orçamento Enviado!</h3>
+      <p>Recebemos sua solicitação. Nossa equipe entrará em contato em até <strong>24 horas úteis</strong> pelo WhatsApp ou e-mail informado.</p>
+      <p style="margin-top:.8rem;font-size:.85rem">Número do orçamento: <strong id="orcNum"></strong></p>
+      <div style="margin-top:1.2rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+        <a href="index.html" class="btn btn-secondary btn-sm">← Voltar à Loja</a>
+        <a href="#" class="btn btn-wpp btn-sm" style="background:#25d366;color:#fff" id="wppConfirm">💬 Confirmar pelo WhatsApp</a>
+      </div>
+    </div>
+
+    <form id="orcForm" novalidate>
+
+      <!-- DADOS PESSOAIS -->
+      <div class="form-card reveal">
+        <h2><span class="form-section-icon">👤</span> Dados Pessoais</h2>
+        <div class="form-row" style="margin-bottom:1rem">
+          <div class="fgroup"><label>Nome completo *</label><input type="text" id="nome" placeholder="Seu nome" required /></div>
+          <div class="fgroup"><label>WhatsApp *</label><input type="tel" id="whatsapp" placeholder="(11) 9 0000-0000" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="fgroup"><label>E-mail</label><input type="email" id="email" placeholder="seu@email.com" /></div>
+          <div class="fgroup"><label>Cidade / Estado *</label><input type="text" id="cidade" placeholder="São Paulo / SP" required /></div>
+        </div>
+      </div>
+
+      <!-- ITENS DO ORÇAMENTO -->
+      <div class="form-card reveal">
+        <h2><span class="form-section-icon">🪑</span> Itens do Orçamento</h2>
+        <div class="item-list" id="itemList">
+          <div class="item-row" data-item="1">
+            <div class="fgroup"><label>Produto</label>
+              <select>
+                <option value="">Selecione um produto…</option>
+                <option value="Mesa de Jantar 6 Lugares">Mesa de Jantar 6 Lugares – R$ 2.890,00</option>
+                <option value="Mesa de Jantar 8 Lugares">Mesa de Jantar 8 Lugares – R$ 3.890,00</option>
+                <option value="Mesa de Cozinha 4 Lugares">Mesa de Cozinha 4 Lugares – R$ 1.650,00</option>
+                <option value="Mesa de Centro">Mesa de Centro – R$ 1.290,00</option>
+                <option value="Mesa Lateral">Mesa Lateral – R$ 680,00</option>
+                <option value="Cadeira de Jantar">Cadeira de Jantar – R$ 490,00</option>
+                <option value="Poltrona Rústica">Poltrona Rústica – R$ 1.490,00</option>
+                <option value="Banqueta de Bar">Banqueta de Bar – R$ 480,00</option>
+                <option value="Aparador 3 Portas">Aparador 3 Portas – R$ 2.190,00</option>
+                <option value="Estante 5 Prateleiras">Estante 5 Prateleiras – R$ 1.890,00</option>
+                <option value="Rack para TV">Rack para TV – R$ 2.490,00</option>
+                <option value="Peça Personalizada">Peça Personalizada (descreva abaixo)</option>
+              </select>
+            </div>
+            <div class="fgroup"><label>Qtd</label><input type="number" value="1" min="1" max="99" style="max-width:70px" /></div>
+            <div class="fgroup"><label>Acabamento</label>
+              <select>
+                <option>Natural/Cera</option>
+                <option>Verniz Fosco</option>
+                <option>Stain Escuro</option>
+                <option>Stain Mel</option>
+              </select>
+            </div>
+            <button type="button" class="remove-item" onclick="removeItem(this)" title="Remover">✕</button>
+          </div>
+        </div>
+        <button type="button" class="add-item-btn" onclick="addItem()">+ Adicionar outro produto</button>
+
+        <div class="fgroup" style="margin-top:1.2rem">
+          <label>Observações / Personalização</label>
+          <textarea id="obs" placeholder="Descreva medidas especiais, cores, acabamentos, ou qualquer personalização desejada…"></textarea>
+        </div>
+      </div>
+
+      <!-- FRETE -->
+      <div class="form-card reveal">
+        <h2><span class="form-section-icon">🚚</span> Calcular Frete</h2>
+
+        <div class="me-token-notice">
+          💡 O cálculo usa a <strong>API Melhor Envio</strong>. Para ativar preços reais, adicione seu token em
+          <a href="https://sandbox.melhorenvio.com.br" target="_blank">sandbox.melhorenvio.com.br</a> → Tokens de acesso.
+          Enquanto isso, mostramos estimativas por região.
+        </div>
+
+        <div class="frete-card">
+          <h3>Calcular Frete para Entrega</h3>
+          <div class="cep-group">
+            <div class="fgroup"><label>Seu CEP de Destino *</label><input type="text" id="cepDestino" placeholder="00000-000" maxlength="9" /></div>
+            <button type="button" class="calc-btn" id="btnCalcFrete">Calcular</button>
+          </div>
+          <div id="freteResults" class="frete-results"></div>
+        </div>
+      </div>
+
+      <!-- RESUMO -->
+      <div class="form-card reveal">
+        <h2><span class="form-section-icon">📋</span> Resumo do Pedido</h2>
+        <div class="summary-box">
+          <h3>Orçamento Estimado</h3>
+          <div id="summaryLines">
+            <div class="summary-line"><span>Nenhum produto selecionado</span><span>—</span></div>
+          </div>
+          <div class="summary-line frete"><span>Frete estimado</span><span id="summaryFrete">Calcule o frete acima</span></div>
+          <div class="summary-line total"><span>Total Estimado</span><span id="summaryTotal">—</span></div>
+        </div>
+        <p style="font-size:.75rem;color:#9e7f68;margin-top:.7rem">* Valores estimados. O preço final será confirmado pela nossa equipe.</p>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-section reveal">
+        <button type="submit" class="btn btn-primary submit-btn">📤 Enviar Solicitação de Orçamento</button>
+        <p class="terms">Ao enviar, você concorda em ser contactado pela nossa equipe via WhatsApp ou e-mail.<br>Não compartilhamos seus dados com terceiros.</p>
+        <div style="margin-top:1rem">
+          <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." class="btn btn-sm" style="background:#25d366;color:#fff" target="_blank">💬 Prefere pelo WhatsApp? Clique aqui</a>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>
+// ── PREÇOS (para resumo) ─────────────────────────────────────────────────
+const PRICES = {
+  'Mesa de Jantar 6 Lugares': 2890, 'Mesa de Jantar 8 Lugares': 3890,
+  'Mesa de Cozinha 4 Lugares': 1650, 'Mesa de Centro': 1290, 'Mesa Lateral': 680,
+  'Cadeira de Jantar': 490, 'Poltrona Rústica': 1490, 'Banqueta de Bar': 480,
+  'Aparador 3 Portas': 2190, 'Estante 5 Prateleiras': 1890,
+  'Rack para TV': 2490, 'Peça Personalizada': 0,
+};
+const FREE_SHIP = 2000;
+const CEP_ORIGEM = '01310100';
+
+// Tabela fallback por UF (quando sem token ME)
+const FRETE_UF = {
+  SP:[5,2,0,89.9],RJ:[6,2,0,99.9],MG:[6,2,0,94.9],ES:[7,3,69.9,109.9],
+  PR:[7,3,74.9,114.9],SC:[8,3,79.9,119.9],RS:[9,4,84.9,124.9],
+  MS:[9,4,89.9,129.9],MT:[10,5,99.9,149.9],GO:[9,4,89.9,139.9],
+  DF:[8,3,84.9,129.9],BA:[10,5,99.9,154.9],PE:[11,5,109.9,164.9],
+  CE:[12,6,114.9,169.9],MA:[13,6,119.9,174.9],PA:[14,7,129.9,184.9],
+  AM:[16,8,149.9,199.9],
+};
+
+let selectedFretePrice = null;
+let selectedFreteLabel = 'Não calculado';
+
+// ── ADD / REMOVE ITEM ────────────────────────────────────────────────────
+let itemCount = 1;
+function addItem() {
+  itemCount++;
+  const row = document.createElement('div');
+  row.className = 'item-row'; row.dataset.item = itemCount;
+  row.innerHTML = `
+    <div class="fgroup"><label>Produto</label>
+      <select onchange="updateSummary()">
+        <option value="">Selecione…</option>
+        <option>Mesa de Jantar 6 Lugares – R$ 2.890,00</option>
+        <option>Mesa de Jantar 8 Lugares – R$ 3.890,00</option>
+        <option>Mesa de Cozinha 4 Lugares – R$ 1.650,00</option>
+        <option>Mesa de Centro – R$ 1.290,00</option>
+        <option>Mesa Lateral – R$ 680,00</option>
+        <option>Cadeira de Jantar – R$ 490,00</option>
+        <option>Poltrona Rústica – R$ 1.490,00</option>
+        <option>Banqueta de Bar – R$ 480,00</option>
+        <option>Aparador 3 Portas – R$ 2.190,00</option>
+        <option>Estante 5 Prateleiras – R$ 1.890,00</option>
+        <option>Rack para TV – R$ 2.490,00</option>
+        <option>Peça Personalizada (descreva abaixo)</option>
+      </select>
+    </div>
+    <div class="fgroup"><label>Qtd</label><input type="number" value="1" min="1" max="99" style="max-width:70px" onchange="updateSummary()" /></div>
+    <div class="fgroup"><label>Acabamento</label>
+      <select><option>Natural/Cera</option><option>Verniz Fosco</option><option>Stain Escuro</option><option>Stain Mel</option></select>
+    </div>
+    <button type="button" class="remove-item" onclick="removeItem(this)">✕</button>`;
+  document.getElementById('itemList').appendChild(row);
+}
+function removeItem(btn) {
+  const rows = document.querySelectorAll('.item-row');
+  if (rows.length === 1) { alert('Mantenha pelo menos um produto.'); return; }
+  btn.closest('.item-row').remove();
+  updateSummary();
+}
+
+// ── RESUMO ───────────────────────────────────────────────────────────────
+function updateSummary() {
+  const rows = document.querySelectorAll('#itemList .item-row');
+  let total = 0;
+  let html = '';
+  let hasItems = false;
+  rows.forEach(row => {
+    const sel = row.querySelector('select');
+    const qty = parseInt(row.querySelector('input[type=number]')?.value || 1);
+    if (!sel || !sel.value) return;
+    const prodName = sel.value.split(' – ')[0];
+    const price = PRICES[prodName] || 0;
+    const sub = price * qty;
+    total += sub;
+    if (price > 0) { hasItems = true; html += `<div class="summary-line"><span>${qty}× ${prodName}</span><span>R$ ${sub.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span></div>`; }
+    else if (prodName === 'Peça Personalizada') { hasItems = true; html += `<div class="summary-line"><span>${qty}× Peça Personalizada</span><span>A consultar</span></div>`; }
+  });
+  if (!hasItems) html = '<div class="summary-line"><span>Nenhum produto selecionado</span><span>—</span></div>';
+  document.getElementById('summaryLines').innerHTML = html;
+
+  const freeShipping = total >= FREE_SHIP;
+  const freteHtml = freeShipping
+    ? '<span class="free">🎉 GRÁTIS</span>'
+    : (selectedFretePrice !== null ? `R$ ${selectedFretePrice.toLocaleString('pt-BR', {minimumFractionDigits:2})}` : 'Calcule o frete acima');
+  document.getElementById('summaryFrete').innerHTML = freteHtml;
+
+  const freteVal = freeShipping ? 0 : (selectedFretePrice || 0);
+  document.getElementById('summaryTotal').textContent = total > 0
+    ? `R$ ${(total + freteVal).toLocaleString('pt-BR', {minimumFractionDigits:2})}`
+    : '—';
+}
+
+document.querySelectorAll('#itemList select, #itemList input[type=number]').forEach(el => el.addEventListener('change', updateSummary));
+
+// ── CEP FORMAT ──────────────────────────────────────────────────────────
+const cepInput = document.getElementById('cepDestino');
+cepInput.addEventListener('input', () => {
+  let v = cepInput.value.replace(/\D/g,'').slice(0,8);
+  if (v.length > 5) v = v.slice(0,5)+'-'+v.slice(5);
+  cepInput.value = v;
+});
+
+// ── FRETE CALCULATOR (ViaCEP + tabela fallback) ──────────────────────────
+document.getElementById('btnCalcFrete').addEventListener('click', calcFrete);
+
+async function calcFrete() {
+  const raw = cepInput.value.replace(/\D/g,'');
+  if (raw.length !== 8) { showFreteError('Digite um CEP válido com 8 dígitos.'); return; }
+  const btn = document.getElementById('btnCalcFrete');
+  btn.disabled = true; btn.textContent = '…';
+  document.getElementById('freteResults').innerHTML = '<div class="frete-loading">🔍 Consultando endereço e calculando frete…</div>';
+
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
+    const addr = await res.json();
+    if (addr.erro) { showFreteError('CEP não encontrado. Verifique e tente novamente.'); return; }
+
+    // Tenta Melhor Envio sandbox se token configurado
+    const ME_TOKEN = localStorage.getItem('me_token') || '';
+    let options;
+    if (ME_TOKEN) {
+      options = await calcMelhorEnvio(raw, ME_TOKEN, addr);
+    } else {
+      options = buildFreteFromTable(addr.uf, addr);
+    }
+    renderFreteOptions(options, addr);
+  } catch(e) {
+    showFreteError('Não foi possível calcular. Verifique sua conexão.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Calcular';
+  }
+}
+
+async function calcMelhorEnvio(cepDest, token, addr) {
+  try {
+    const payload = {
+      from: { postal_code: CEP_ORIGEM },
+      to:   { postal_code: cepDest },
+      package: { height:30, width:90, length:180, weight:50 },
+      options: { insurance_value:0, receipt:false, own_hand:false },
+      services: '1,2'
+    };
+    const r = await fetch('https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', {
+      method:'POST',
+      headers:{ 'Accept':'application/json','Content-Type':'application/json','Authorization':`Bearer ${token}`,'User-Agent':'EncantoRustico (contato@encantorustico.com.br)' },
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error('ME error');
+    const data = await r.json();
+    return data.filter(s => s.price && !s.error).map(s => ({
+      name: s.name, company: s.company?.name || '', days: s.delivery_time,
+      price: parseFloat(s.price), id: s.id
+    }));
+  } catch { return buildFreteFromTable(addr.uf, addr); }
+}
+
+function buildFreteFromTable(uf, addr) {
+  const t = FRETE_UF[uf] || [15,7,139.9,199.9];
+  return [
+    { name:'PAC – Correios', company:'Correios', days:t[0], price:t[2], id:1 },
+    { name:'SEDEX – Correios', company:'Correios', days:t[1], price:t[3], id:2 },
+  ];
+}
+
+function renderFreteOptions(options, addr) {
+  if (!options.length) { showFreteError('Nenhuma opção de frete disponível para esta região.'); return; }
+  const el = document.getElementById('freteResults');
+  const totalProd = getProductTotal();
+  const free = totalProd >= FREE_SHIP;
+  let html = '';
+  options.forEach((opt, i) => {
+    const priceDisplay = (free || opt.price === 0) ? '<span class="frete-price free">🎉 GRÁTIS</span>' : `<span class="frete-price">R$ ${opt.price.toFixed(2).replace('.',',')}</span>`;
+    html += `<label class="frete-option ${i===0?'selected':''}">
+      <input type="radio" name="freteOpt" value="${opt.price}" data-label="${opt.name}" ${i===0?'checked':''} onchange="selectFrete(this,'${opt.name}',${opt.price})" />
+      <div>
+        <div class="frete-name">${opt.name}</div>
+        <div class="frete-company">${opt.company} · ${opt.days} dia${opt.days>1?'s':''} úteis após produção</div>
+      </div>
+      ${priceDisplay}
+    </label>`;
+  });
+  html += `<div class="frete-address">📍 Entregando para: <strong>${addr.localidade}/${addr.uf}</strong> — ${addr.logradouro||''} ${addr.bairro||''}</div>`;
+  if (totalProd < FREE_SHIP) html += `<div class="frete-address" style="color:var(--accent);margin-top:.3rem">💡 Frete grátis em compras acima de R$ 2.000!</div>`;
+  el.innerHTML = html;
+
+  // Select first
+  const firstOpt = options[0];
+  selectFrete(null, firstOpt.name, firstOpt.price);
+  updateSummary();
+}
+
+function selectFrete(radio, label, price) {
+  selectedFretePrice = price;
+  selectedFreteLabel = label;
+  document.querySelectorAll('.frete-option').forEach(o => o.classList.remove('selected'));
+  if (radio) radio.closest('.frete-option').classList.add('selected');
+  updateSummary();
+}
+
+function showFreteError(msg) {
+  document.getElementById('freteResults').innerHTML = `<div class="frete-error">⚠️ ${msg}</div>`;
+}
+function getProductTotal() {
+  let t = 0;
+  document.querySelectorAll('#itemList .item-row').forEach(row => {
+    const sel = row.querySelector('select'); const qty = parseInt(row.querySelector('input[type=number]')?.value||1);
+    if (!sel?.value) return;
+    t += (PRICES[sel.value.split(' – ')[0]] || 0) * qty;
+  });
+  return t;
+}
+
+// ── FORM SUBMIT ──────────────────────────────────────────────────────────
+document.getElementById('orcForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const wpp  = document.getElementById('whatsapp').value.trim();
+  const cid  = document.getElementById('cidade').value.trim();
+  if (!nome || !wpp || !cid) { alert('Preencha os campos obrigatórios: Nome, WhatsApp e Cidade.'); return; }
+
+  const btn = e.target.querySelector('.submit-btn');
+  btn.disabled = true; btn.textContent = 'Enviando…';
+
+  // Monta texto para WhatsApp
+  const orcNum = 'ORC-' + Date.now().toString(36).toUpperCase();
+  document.getElementById('orcNum').textContent = orcNum;
+
+  let items = '';
+  document.querySelectorAll('#itemList .item-row').forEach(row => {
+    const sel = row.querySelector('select'); const qty = row.querySelector('input[type=number]')?.value||1;
+    const acab = row.querySelectorAll('select')[1]?.value||'';
+    if (sel?.value) items += `\n• ${qty}× ${sel.value.split(' – ')[0]} (${acab})`;
+  });
+  const obs  = document.getElementById('obs').value;
+  const cep  = document.getElementById('cepDestino').value;
+  const total = getProductTotal();
+  const freteStr = total >= FREE_SHIP ? 'GRÁTIS' : (selectedFretePrice ? `R$ ${selectedFretePrice.toFixed(2).replace('.',',')} (${selectedFreteLabel})` : 'A calcular');
+
+  const msg = encodeURIComponent(
+    `*Orçamento ${orcNum} – Encanto Rústico*\n\n` +
+    `👤 *Cliente:* ${nome}\n📱 *WhatsApp:* ${wpp}\n📍 *Cidade:* ${cid}\n📦 *CEP:* ${cep||'Não informado'}\n\n` +
+    `*Produtos:*${items}\n\n` +
+    (obs ? `📝 *Observações:* ${obs}\n\n` : '') +
+    `🚚 *Frete:* ${freteStr}\n` +
+    `💰 *Total estimado:* R$ ${(total + (total>=FREE_SHIP?0:selectedFretePrice||0)).toLocaleString('pt-BR',{minimumFractionDigits:2})}`
+  );
+
+  document.getElementById('wppConfirm').href = `https://wa.me/5511999999999?text=${msg}`;
+
+  // Simula envio (sem backend)
+  await new Promise(r => setTimeout(r, 1000));
+  document.getElementById('orcForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  document.getElementById('successMsg').scrollIntoView({ behavior:'smooth' });
+});
+</script>
+</body>
+</html>

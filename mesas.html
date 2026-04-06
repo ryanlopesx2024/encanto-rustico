@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesas Rústicas – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    .filter-mobile-toggle { display: none; width: 100%; padding: .7rem 1rem; background: var(--primary); color: #fff; border: none; font-family: 'Lato',sans-serif; font-size: .85rem; font-weight: 700; border-radius: var(--radius); cursor: pointer; margin-bottom: 1rem; }
+    @media(max-width:900px) { .filter-mobile-toggle { display: block; } .filters { display: none; } .filters.open { display: block; position: static; } }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Início</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Mesas</span>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=1400&q=70&auto=format" alt="Mesas Rústicas" />
+  <div class="page-hero-content reveal">
+    <div class="label">Coleção Completa</div>
+    <h1>Mesas Rústicas</h1>
+    <p>Madeira maciça, acabamento artesanal, peças para toda a vida</p>
+  </div>
+</div>
+
+<!-- SUBCATEGORIA TAGS -->
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="tags">
+      <span class="tag active">Todas</span>
+      <span class="tag">Jantar</span>
+      <span class="tag">Cozinha</span>
+      <span class="tag">Centro</span>
+      <span class="tag">Lateral</span>
+      <span class="tag">Escritório</span>
+      <span class="tag">Área Externa</span>
+      <span class="tag">Bistrô</span>
+    </div>
+  </div>
+</div>
+
+<!-- CATALOG -->
+<div class="catalog-layout">
+
+  <!-- FILTERS -->
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+
+      <div class="filter-group">
+        <h4>Categoria</h4>
+        <div class="filter-option"><input type="checkbox" id="f1" checked /><label for="f1">Todas as Mesas</label><span class="count">38</span></div>
+        <div class="filter-option"><input type="checkbox" id="f2" /><label for="f2">Mesa de Jantar</label><span class="count">12</span></div>
+        <div class="filter-option"><input type="checkbox" id="f3" /><label for="f3">Mesa de Cozinha</label><span class="count">8</span></div>
+        <div class="filter-option"><input type="checkbox" id="f4" /><label for="f4">Mesa de Centro</label><span class="count">7</span></div>
+        <div class="filter-option"><input type="checkbox" id="f5" /><label for="f5">Mesa Lateral</label><span class="count">5</span></div>
+        <div class="filter-option"><input type="checkbox" id="f6" /><label for="f6">Área Externa</label><span class="count">6</span></div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Preço</h4>
+        <div class="price-range">
+          <input type="range" id="priceRange" min="500" max="8000" value="8000" step="100" />
+          <div class="price-labels"><span>R$ 500</span><span id="priceMax">R$ 8.000</span></div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Material</h4>
+        <div class="filter-option"><input type="checkbox" id="m1" /><label for="m1">Peroba Rosa</label><span class="count">14</span></div>
+        <div class="filter-option"><input type="checkbox" id="m2" /><label for="m2">Tauari</label><span class="count">11</span></div>
+        <div class="filter-option"><input type="checkbox" id="m3" /><label for="m3">Eucalipto</label><span class="count">7</span></div>
+        <div class="filter-option"><input type="checkbox" id="m4" /><label for="m4">Madeira de Lei</label><span class="count">6</span></div>
+        <div class="filter-option"><input type="checkbox" id="m5" /><label for="m5">Ferro + Madeira</label><span class="count">9</span></div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Número de Lugares</h4>
+        <div class="filter-option"><input type="checkbox" id="l2" /><label for="l2">2 lugares</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" id="l4" /><label for="l4">4 lugares</label><span class="count">9</span></div>
+        <div class="filter-option"><input type="checkbox" id="l6" /><label for="l6">6 lugares</label><span class="count">11</span></div>
+        <div class="filter-option"><input type="checkbox" id="l8" /><label for="l8">8+ lugares</label><span class="count">6</span></div>
+      </div>
+
+      <div class="filter-group">
+        <h4>Acabamento</h4>
+        <div class="filter-option"><input type="checkbox" id="a1" /><label for="a1">Natural / Cera</label></div>
+        <div class="filter-option"><input type="checkbox" id="a2" /><label for="a2">Verniz Fosco</label></div>
+        <div class="filter-option"><input type="checkbox" id="a3" /><label for="a3">Stain Escuro</label></div>
+        <div class="filter-option"><input type="checkbox" id="a4" /><label for="a4">Pintura Rústica</label></div>
+      </div>
+
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS -->
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>38 produtos</strong> encontrados</div>
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+        <div class="catalog-sort">
+          <span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span>
+          <select>
+            <option>Mais Vendidos</option>
+            <option>Menor Preço</option>
+            <option>Maior Preço</option>
+            <option>Novidades</option>
+            <option>A–Z</option>
+          </select>
+        </div>
+        <div class="catalog-view-btns">
+          <button class="catalog-view-btn active" id="viewGrid">⊞</button>
+          <button class="catalog-view-btn" id="viewList">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa de Jantar 6 Lugares" />
+          <span class="product-badge">Mais Vendido</span>
+          <div class="product-actions">
+            <button class="product-action-btn" title="Favoritar">❤</button>
+            <button class="product-action-btn" title="Visualizar na sala" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Jantar</div>
+          <h3>Mesa de Jantar Rústica 6 Lugares – Peroba Rosa</h3>
+          <div class="materials">Peroba Rosa · Verniz Fosco · 180×90cm</div>
+          <div class="product-price">
+            R$ 2.890,00
+            <span class="installments">12x de R$ 240,84 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa de Centro" />
+          <span class="product-badge novo">Novidade</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Centro</div>
+          <h3>Mesa de Centro com Gaveta – Tauari Natural</h3>
+          <div class="materials">Tauari · Natural/Cera · 120×60cm</div>
+          <div class="product-price">
+            R$ 1.290,00
+            <span class="installments">12x de R$ 107,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa de Cozinha 4 Lugares" />
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Cozinha</div>
+          <h3>Mesa de Cozinha Rústica 4 Lugares</h3>
+          <div class="materials">Eucalipto · Stain Escuro · 140×80cm</div>
+          <div class="product-price">
+            R$ 1.650,00
+            <span class="installments">12x de R$ 137,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa Área Externa" />
+          <span class="product-badge off">-15%</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Área Externa</div>
+          <h3>Mesa para Área Externa – Madeira de Lei Tratada</h3>
+          <div class="materials">Madeira de Lei · Impermeabilizada · 160×90cm</div>
+          <div class="product-price">
+            <span class="old-price">R$ 2.580,00</span>R$ 2.190,00
+            <span class="installments">12x de R$ 182,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa Jantar 8 Lugares" />
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Jantar</div>
+          <h3>Mesa de Jantar 8 Lugares com Tampo Ripado</h3>
+          <div class="materials">Peroba Rosa · Verniz Fosco · 220×100cm</div>
+          <div class="product-price">
+            R$ 3.890,00
+            <span class="installments">12x de R$ 324,17 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1493663284031-b7e3aaa92b84?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa Lateral" />
+          <span class="product-badge novo">Novidade</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa Lateral</div>
+          <h3>Mesa Lateral Rústica com Suporte de Ferro</h3>
+          <div class="materials">Tauari + Ferro · Natural · 45×45cm</div>
+          <div class="product-price">
+            R$ 680,00
+            <span class="installments">6x de R$ 113,34 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa de Escritório" />
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Escritório</div>
+          <h3>Mesa de Escritório Rústica com 2 Gavetas</h3>
+          <div class="materials">Peroba Rosa · Stain · 150×70cm</div>
+          <div class="product-price">
+            R$ 1.890,00
+            <span class="installments">12x de R$ 157,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa Bistrô" />
+          <span class="product-badge off">-20%</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa Bistrô</div>
+          <h3>Mesa Bistrô 2 Lugares – Ferro e Madeira</h3>
+          <div class="materials">Ferro Preto + Tauari · 60×60cm</div>
+          <div class="product-price">
+            <span class="old-price">R$ 1.110,00</span>R$ 890,00
+            <span class="installments">12x de R$ 74,17 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=500&q=70&auto=format&fit=crop&h=375&crop=right" alt="Mesa Jantar Pé Palito" />
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Jantar</div>
+          <h3>Mesa de Jantar Pé Palito Rústico 4 Lugares</h3>
+          <div class="materials">Eucalipto · Natural · 140×80cm</div>
+          <div class="product-price">
+            R$ 2.190,00
+            <span class="installments">12x de R$ 182,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&q=70&auto=format&fit=crop&h=375&crop=top" alt="Mesa de Centro Industrial" />
+          <span class="product-badge novo">Novidade</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Centro</div>
+          <h3>Mesa de Centro Industrial c/ Prateleira Inferior</h3>
+          <div class="materials">Ferro + Madeira de Lei · 130×70cm</div>
+          <div class="product-price">
+            R$ 1.590,00
+            <span class="installments">12x de R$ 132,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=70&auto=format&fit=crop&h=375&crop=left" alt="Mesa Refeição Ripada" />
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Mesa de Jantar</div>
+          <h3>Mesa de Refeição com Tampo Ripado 10 Lugares</h3>
+          <div class="materials">Peroba Rosa · Stain Escuro · 280×110cm</div>
+          <div class="product-price">
+            R$ 5.490,00
+            <span class="installments">12x de R$ 457,50 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image">
+          <img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=500&q=70&auto=format&fit=crop&h=375" alt="Mesa Varanda" />
+          <span class="product-badge off">-10%</span>
+          <div class="product-actions">
+            <button class="product-action-btn">❤</button>
+            <button class="product-action-btn" onclick="window.location='produto.html'">👁</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="category">Área Externa</div>
+          <h3>Mesa para Varanda Gourmet 6 Lugares – Teca</h3>
+          <div class="materials">Teca · Impermeabilizada · 180×90cm</div>
+          <div class="product-price">
+            <span class="old-price">R$ 3.200,00</span>R$ 2.880,00
+            <span class="installments">12x de R$ 240,00 sem juros</span>
+          </div>
+          <button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button>
+        </div>
+      </div>
+
+    </div><!-- /product-grid -->
+
+    <!-- PAGINATION -->
+    <div class="pagination reveal">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn dots">…</button>
+      <button class="page-btn">8</button>
+    </div>
+  </div><!-- /catalog-main -->
+</div><!-- /catalog-layout -->
+
+<div id="site-footer"></div>
+
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>
+  document.getElementById('filterToggle').addEventListener('click', () => {
+    document.getElementById('filtersPanel').classList.toggle('open');
+  });
+</script>
+</body>
+</html>
