@@ -472,8 +472,8 @@
         <div class="product-info"><div class="category">Cadeiras</div><h3>Kit 6 Cadeiras de Jantar Rústicas</h3><div class="product-price">R$ 2.940,00<span class="installments">12x de R$ 245,00</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
       </div>
       <div class="product-card reveal reveal-delay-1">
-        <div class="product-card-image"><img src="assets/images/IMG_20260328_111510_163.jpg" alt="Aparador de Sala" /></div>
-        <div class="product-info"><div class="category">Aparador</div><h3>Aparador Rústico 3 Portas – Peroba Rosa</h3><div class="product-price">R$ 2.190,00<span class="installments">12x de R$ 182,50</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+        <div class="product-card-image" style="cursor:pointer" onclick="window.location='produto.html?p=aparador-rustico-3-portas-peroba-rosa'"><img src="assets/images/IMG_20260328_111510_163.jpg" alt="Aparador de Sala" /></div>
+        <div class="product-info"><div class="category">Aparador</div><h3>Aparador Rústico 3 Portas – Peroba Rosa</h3><div class="product-price">R$ 2.190,00<span class="installments">12x de R$ 182,50</span></div><button class="product-btn" onclick="window.location='produto.html?p=aparador-rustico-3-portas-peroba-rosa'">Ver Produto</button></div>
       </div>
       <div class="product-card reveal reveal-delay-2">
         <div class="product-card-image"><img src="assets/images/IMG_20251222_101322_172.jpg" alt="Conjunto Sala de Jantar" /></div>
@@ -486,7 +486,82 @@
 <div id="site-footer"></div>
 <script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
 <script src="assets/base.js?v=2"></script>
-<script src="assets/search.js?v=1"></script>
+<script src="assets/search.js?v=2"></script>
+<script>
+// Hidrata a página com o produto indicado em ?p=<slug> (índice do search.js)
+(function () {
+  var slug = new URLSearchParams(window.location.search).get("p");
+  if (!slug || !window.SITE_SEARCH) return;
+  var it = window.SITE_SEARCH.index.find(function (x) { return x.s === slug; });
+  if (!it) return;
+
+  document.title = it.t + " – Encanto Rústico";
+
+  var bc = document.querySelector(".breadcrumb-inner");
+  if (bc) bc.innerHTML = '<a href="index.html">Início</a><span class="breadcrumb-sep">›</span>' +
+    '<a href="' + it.u + '">' + (it.c || "Catálogo") + '</a><span class="breadcrumb-sep">›</span><span>' + it.t + "</span>";
+
+  var main = document.getElementById("mainImg");
+  if (main) { main.src = it.i; main.alt = it.t; }
+  var thumbs = document.querySelector(".gallery-thumbs");
+  if (thumbs) thumbs.innerHTML = '<div class="gallery-thumb active"><img src="' + it.i + '" alt="' + it.t + '" /></div>';
+
+  var catLink = document.querySelector(".category-link");
+  if (catLink) { catLink.textContent = it.c || "Catálogo"; catLink.href = it.u; }
+  var h1 = document.querySelector(".product-detail-info h1");
+  if (h1) h1.textContent = it.t;
+
+  var priceEl = document.querySelector(".main-price");
+  if (priceEl && it.p) priceEl.textContent = it.p;
+  var old = document.querySelector(".old-price"); if (old) old.style.display = "none";
+  var badge = document.querySelector(".discount-badge"); if (badge) badge.style.display = "none";
+  var inst = document.querySelector(".price-block .installments");
+  if (inst) inst.innerHTML = it.n ? "ou <strong>" + it.n + "</strong> no cartão" : "";
+  var pix = document.querySelector(".price-block .pix");
+  if (pix && it.p) {
+    var val = parseFloat(it.p.replace(/[^\d,]/g, "").replace(",", "."));
+    if (val) pix.innerHTML = "💳 R$ " + (val * 0.9).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + " no Pix (10% de desconto)";
+  }
+
+  // opções específicas da mesa não valem para todos os produtos
+  document.querySelectorAll(".option-group").forEach(function (g) {
+    var label = (g.querySelector("label") || {}).textContent || "";
+    if (label === "Tamanho" || label === "Cor do Pé") g.style.display = "none";
+  });
+
+  var firstFeature = document.querySelector(".feature-list .feature-item");
+  if (firstFeature) firstFeature.innerHTML = '<span class="icon">🌳</span> Madeira maciça certificada';
+
+  var wpp = document.querySelector(".btn-wpp");
+  if (wpp) wpp.href = "https://wa.me/5511999999999?text=" +
+    encodeURIComponent("Olá! Tenho interesse no produto: " + it.t + ".");
+
+  // aba descrição
+  var desc = document.getElementById("tab-descricao");
+  var parts = (it.m || "").split("·").map(function (x) { return x.trim(); }).filter(Boolean);
+  if (desc) {
+    desc.innerHTML =
+      '<p style="line-height:1.8;color:#5c3d2e;margin-bottom:1rem">O produto <strong>' + it.t +
+      "</strong> é uma peça artesanal única, produzida à mão por nossos marceneiros com mais de 15 anos de experiência. Cada peça respeita as características naturais da madeira, com veios únicos que a tornam um exemplar exclusivo.</p>" +
+      (parts.length ? '<ul style="margin-left:1.2rem;color:#5c3d2e;line-height:2">' +
+        parts.map(function (x) { return "<li>" + x + "</li>"; }).join("") +
+        "<li>Personalização de medidas e acabamento sem custo extra</li><li>Madeira certificada de reflorestamento</li></ul>" : "");
+  }
+
+  // aba especificações
+  var specs = document.querySelector("#tab-specs .specs-table");
+  if (specs) {
+    var rows = [];
+    if (parts[0]) rows.push(["Material Principal", parts[0]]);
+    if (parts[1]) rows.push(["Acabamento", parts[1]]);
+    if (parts[2]) rows.push(["Dimensões", parts[2]]);
+    rows.push(["Prazo de Produção", "15 a 25 dias úteis"],
+              ["Garantia", "2 anos contra defeitos de fabricação"],
+              ["Personalização", "Sim – medidas, acabamento e cor"]);
+    specs.innerHTML = rows.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("");
+  }
+})();
+</script>
 <script>
 // ── Gallery ───────────────────────────────────────────────
 function changeImg(thumb, src) {
