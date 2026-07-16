@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Busca – Encanto Rústico</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="assets/base.css?v=2" />
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Busca</span></div></div>
+
+<div class="catalog-layout" style="grid-template-columns:1fr">
+  <div class="catalog-main">
+    <div class="catalog-toolbar">
+      <div class="catalog-count" id="searchCount"><strong>Busca</strong></div>
+    </div>
+    <div class="product-grid" id="searchGrid"></div>
+    <div id="searchEmpty" style="display:none;text-align:center;padding:3rem 1rem;color:#7a5f4e">
+      <div style="font-size:2.2rem;margin-bottom:.6rem">🔎</div>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--dark);margin-bottom:.5rem">Nenhum produto encontrado</h2>
+      <p style="font-size:.9rem">Tente buscar por outro termo, como “mesa”, “buffet”, “armário” ou “quadro”.</p>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js?v=2"></script>
+<script src="assets/search.js?v=1"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(window.location.search).get("q") || "";
+  var input = document.querySelector(".header-search input");
+  if (input) input.value = q;
+  var hits = q ? window.SITE_SEARCH.search(q, 60) : [];
+  var count = document.getElementById("searchCount");
+  var grid = document.getElementById("searchGrid");
+  count.innerHTML = "<strong>" + hits.length + " produto" + (hits.length === 1 ? "" : "s") + "</strong> para “" +
+    q.replace(/[<>&]/g, "") + "”";
+  if (!hits.length) {
+    document.getElementById("searchEmpty").style.display = "block";
+    return;
+  }
+  hits.forEach(function (it, n) {
+    var card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML =
+      '<div class="product-card-image"><img src="' + it.i + '" alt="' + it.t + '" loading="lazy" />' +
+      '<div class="product-actions"><button class="product-action-btn">❤</button>' +
+      '<button class="product-action-btn" onclick="window.location=\'' + it.u + '\'">👁</button></div></div>' +
+      '<div class="product-info"><div class="category">' + it.c + "</div><h3>" + it.t + "</h3>" +
+      (it.p ? '<div class="product-price">' + it.p + "</div>" : "") +
+      '<button class="product-btn" onclick="window.location=\'' + it.u + '\'">Ver na Categoria</button></div>';
+    grid.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
