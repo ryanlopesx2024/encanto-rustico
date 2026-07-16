@@ -90,21 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Shared Header HTML ──────────────────────────────────
 function renderHeader() {
-  const treeSVG = `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="40" y1="75" x2="40" y2="45" stroke="#2C1A0E" stroke-width="3" stroke-linecap="round"/>
-    <line x1="40" y1="60" x2="30" y2="72" stroke="#2C1A0E" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="65" x2="50" y2="75" stroke="#2C1A0E" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="45" x2="20" y2="28" stroke="#2C1A0E" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="40" y1="45" x2="60" y2="28" stroke="#2C1A0E" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="15" y2="22" stroke="#2C1A0E" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="65" y2="20" stroke="#2C1A0E" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="40" y2="18" stroke="#2C1A0E" stroke-width="2" stroke-linecap="round"/>
-    <line x1="20" y1="28" x2="10" y2="18" stroke="#2C1A0E" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="60" y1="28" x2="70" y2="18" stroke="#2C1A0E" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="40" y1="18" x2="34" y2="10" stroke="#2C1A0E" stroke-width="1.4" stroke-linecap="round"/>
-    <line x1="40" y1="18" x2="47" y2="10" stroke="#2C1A0E" stroke-width="1.4" stroke-linecap="round"/>
-  </svg>`;
-
   return `
   <header>
     <div class="header-inner">
@@ -113,11 +98,7 @@ function renderHeader() {
         <button>🔍</button>
       </div>
       <a href="index.html" class="logo">
-        <div class="logo-tree">${treeSVG}</div>
-        <div class="logo-text">
-          <div class="brand">ENCANTO RÚSTICO</div>
-          <div class="tagline">Móveis Artesanais</div>
-        </div>
+        <img class="logo-img" src="assets/images/logo.png" alt="Encanto Rústico – Móveis Artesanais" />
       </a>
       <div class="header-actions">
         <a href="#"><span class="icon">👤</span>Minha Conta</a>
@@ -208,26 +189,13 @@ function renderHeader() {
 }
 
 function renderFooter() {
-  const treeSVG = `<svg viewBox="0 0 80 80" fill="none" width="36" height="36">
-    <line x1="40" y1="75" x2="40" y2="45" stroke="#E8C49A" stroke-width="3" stroke-linecap="round"/>
-    <line x1="40" y1="45" x2="20" y2="28" stroke="#E8C49A" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="40" y1="45" x2="60" y2="28" stroke="#E8C49A" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="15" y2="22" stroke="#E8C49A" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="65" y2="20" stroke="#E8C49A" stroke-width="2" stroke-linecap="round"/>
-    <line x1="40" y1="35" x2="40" y2="18" stroke="#E8C49A" stroke-width="2" stroke-linecap="round"/>
-  </svg>`;
-
   return `
   <footer>
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-tree">${treeSVG}</div>
-            <div class="logo-text">
-              <div class="brand" style="color:#E8C49A;font-size:1.1rem">ENCANTO RÚSTICO</div>
-              <div class="tagline">Móveis Artesanais</div>
-            </div>
+            <img class="logo-img logo-img-footer" src="assets/images/logo-clara.png" alt="Encanto Rústico – Móveis Artesanais" />
           </a>
           <p>Móveis rústicos artesanais com mais de 15 anos de tradição. Qualidade, beleza natural e entrega em todo o Brasil.</p>
           <div class="social">

@@ -78,6 +78,8 @@ header.scrolled { box-shadow: 0 2px 22px rgba(44,26,14,.22); }
   text-align: center;
 }
 .logo-tree svg { width: 52px; height: 52px; }
+.logo-img { height: 58px; width: auto; display: block; }
+.logo-img-footer { height: 52px; }
 .logo-text { line-height: 1.1; }
 .logo-text .brand { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--dark); letter-spacing: .06em; }
 .logo-text .tagline { font-size: .65rem; letter-spacing: .18em; color: var(--medium); text-transform: uppercase; font-weight: 600; }
@@ -418,6 +420,7 @@ footer { background: #1a0e08; color: #c9ad96; padding: 3rem 1.5rem 1.5rem; }
   .header-search { grid-column: 1/-1; grid-row: 2; max-width: 100%; }
   .header-actions { display: none; }
   .logo-text .brand { font-size: 1.2rem; }
+  .logo-img { height: 46px; }
   .page-hero { height: 200px; }
   .page-hero-content h1 { font-size: 1.8rem; }
   .catalog-layout { padding: 1.5rem 1rem; }
