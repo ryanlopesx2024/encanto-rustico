@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Móveis para Cozinha – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    .filter-mobile-toggle{display:none;width:100%;padding:.7rem 1rem;background:var(--primary);color:#fff;border:none;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-bottom:1rem}
+    @media(max-width:900px){.filter-mobile-toggle{display:block}.filters{display:none}.filters.open{display:block;position:static}}
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Cozinha</span></div></div>
+<div class="page-hero">
+  <img src="assets/images/IMG_20250922_103453_947.jpg" alt="Móveis Rústicos para Cozinha" />
+  <div class="page-hero-content reveal"><div class="label">Funcionalidade e charme</div><h1>Móveis para Cozinha</h1><p>Mesas, cadeiras, banquetas e aparadores para transformar sua cozinha</p></div>
+</div>
+
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto"><div class="tags"><span class="tag active">Todos</span><span class="tag">Mesas</span><span class="tag">Cadeiras</span><span class="tag">Banquetas</span><span class="tag">Aparadores</span><span class="tag">Conjuntos</span></div></div>
+</div>
+
+<div class="catalog-layout">
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+      <div class="filter-group"><h4>Categoria</h4>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">18</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Mesas</label><span class="count">5</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Cadeiras</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Banquetas</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Aparadores</label><span class="count">3</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Conjuntos</label><span class="count">2</span></div>
+      </div>
+      <div class="filter-group"><h4>Número de Lugares</h4>
+        <div class="filter-option"><input type="checkbox" /><label>2 lugares</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>4 lugares</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>6 lugares</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>8+ lugares</label></div>
+      </div>
+      <div class="filter-group"><h4>Preço</h4>
+        <div class="price-range"><input type="range" id="priceRange" min="200" max="6000" value="6000" step="100" /><div class="price-labels"><span>R$ 200</span><span id="priceMax">R$ 6.000</span></div></div>
+      </div>
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>18 produtos</strong> encontrados</div>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
+        <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20250922_103453_947.jpg" alt="Mesa Redonda de Cozinha 4 Lugares Pé Pedestal" /><span class="product-badge">Mais Vendida</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Mesa de Cozinha</div><h3>Mesa Redonda 4 Lugares – Pé Pedestal, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · Ø 90cm</div><div class="product-price">R$ 1.290,00<span class="installments">12x de R$ 107,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20250922_103452_625.jpg" alt="Mesa de Cozinha Retangular 4 Lugares Pés Torneados" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Mesa de Cozinha</div><h3>Mesa Retangular 4 Lugares – Pés Torneados, Natural</h3><div class="materials">Madeira Maciça · Verniz Natural · 120×70cm</div><div class="product-price">R$ 1.190,00<span class="installments">12x de R$ 99,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20251222_102006_711.jpg" alt="Mesa Redonda de Cozinha 6 Lugares Base Ripada" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Mesa de Cozinha</div><h3>Mesa Redonda 6 Lugares – Base Ripada, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · Ø 130cm</div><div class="product-price">R$ 2.490,00<span class="installments">12x de R$ 207,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20251222_101324_508.jpg" alt="Cadeira Windsor para Cozinha Madeira Maciça" /><span class="product-badge">Mais Vendida</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Cadeira de Cozinha</div><h3>Cadeira Windsor – Encosto Arredondado, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 90cm</div><div class="product-price">R$ 490,00<span class="installments">6x de R$ 81,67 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20250922_103444_068.jpg" alt="Cadeira Encosto Reto em Réguas para Cozinha" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Cadeira de Cozinha</div><h3>Cadeira Encosto Reto em Réguas – Natural</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 88cm</div><div class="product-price">R$ 420,00<span class="installments">6x de R$ 70,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20251030_092028_501.jpg" alt="Banqueta Alta de Bar para Cozinha" /><span class="product-badge">Mais Vendida</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Banqueta de Bar</div><h3>Banqueta Alta de Bar – Assento Redondo, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 70cm</div><div class="product-price">R$ 390,00<span class="installments">6x de R$ 65,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_0863.HEIC.jpg" alt="Banqueta de Cozinha com Encosto Madeira Maciça" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Banqueta de Cozinha</div><h3>Banqueta com Encosto – Assento Redondo, Natural</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 60cm</div><div class="product-price">R$ 320,00<span class="installments">4x de R$ 80,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130936_515.jpg" alt="Aparador de Cozinha 3 Gavetas 3 Portas" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Aparador de Cozinha</div><h3>Aparador de Cozinha 3 Gavetas + 3 Portas – Pés Retos</h3><div class="materials">Madeira Maciça · Verniz Natural · 160cm</div><div class="product-price">R$ 2.290,00<span class="installments">12x de R$ 190,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20250818_103408_040.jpg" alt="Conjunto Mesa 8 Lugares com Cadeiras para Cozinha Grande" /><span class="product-badge">Mais Vendido</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Conjunto Cozinha</div><h3>Conjunto Mesa 8 Lugares + Cadeiras Windsor – Instalado</h3><div class="materials">Madeira Maciça · Verniz Natural · 9 peças</div><div class="product-price">R$ 6.490,00<span class="installments">12x de R$ 540,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+    </div>
+    <div class="pagination reveal"><button class="page-btn active">1</button><button class="page-btn">2</button></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>document.getElementById('filterToggle').addEventListener('click',()=>document.getElementById('filtersPanel').classList.toggle('open'));</script>
+</body>
+</html>

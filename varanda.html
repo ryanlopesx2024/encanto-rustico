@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Varanda &amp; Jardim – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    .filter-mobile-toggle{display:none;width:100%;padding:.7rem 1rem;background:var(--primary);color:#fff;border:none;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-bottom:1rem}
+    @media(max-width:900px){.filter-mobile-toggle{display:block}.filters{display:none}.filters.open{display:block;position:static}}
+    .varanda-banner { background:linear-gradient(135deg, #3a5a1c, #2C1A0E); color:#fff; text-align:center; padding:2.2rem 1.5rem; }
+    .varanda-banner h2 { font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:.3rem; }
+    .varanda-banner p { opacity:.85; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Varanda &amp; Jardim</span></div></div>
+
+<div class="page-hero">
+  <img src="assets/images/Screenshot_20260120_171813_Instagram.jpg" alt="Varanda e Jardim Rústico" />
+  <div class="page-hero-content reveal"><div class="label">Área externa</div><h1>Varanda &amp; Jardim</h1><p>Móveis rústicos para transformar sua área externa num paraíso</p></div>
+</div>
+
+<div class="varanda-banner">
+  <h2>🌿 Madeira para Área Externa</h2>
+  <p>Nossas peças para varanda são tratadas com verniz especial resistente à umidade e variações climáticas.</p>
+</div>
+
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto"><div class="tags"><span class="tag active">Todos</span><span class="tag">Mesas</span><span class="tag">Cadeiras</span><span class="tag">Conjuntos</span><span class="tag">Área Gourmet</span><span class="tag">Jardim</span></div></div>
+</div>
+
+<div class="catalog-layout">
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+      <div class="filter-group"><h4>Categoria</h4>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">16</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Mesas Externas</label><span class="count">5</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Cadeiras Externas</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Conjuntos</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Área Gourmet</label><span class="count">3</span></div>
+      </div>
+      <div class="filter-group"><h4>Capacidade</h4>
+        <div class="filter-option"><input type="checkbox" /><label>Até 4 pessoas</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>6 a 8 pessoas</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>10 a 12 pessoas</label></div>
+        <div class="filter-option"><input type="checkbox" /><label>12+ pessoas</label></div>
+      </div>
+      <div class="filter-group"><h4>Preço</h4>
+        <div class="price-range"><input type="range" id="priceRange" min="400" max="12000" value="12000" step="200" /><div class="price-labels"><span>R$ 400</span><span id="priceMax">R$ 12.000</span></div></div>
+      </div>
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>16 produtos</strong> encontrados</div>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
+        <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/Screenshot_20260120_171813_Instagram.jpg" alt="Conjunto Mesa Redonda Varanda 8 Lugares com Cadeiras Windsor" /><span class="product-badge">Mais Vendido</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Conjunto Varanda</div><h3>Conjunto Mesa Redonda Varanda 8 Lugares + Cadeiras Windsor</h3><div class="materials">Madeira Maciça · Verniz Externo · 9 peças</div><div class="product-price">R$ 6.990,00<span class="installments">12x de R$ 582,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG-20251215-WA0035.jpg" alt="Conjunto Mesa 12 Lugares Área Gourmet Coberta" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Área Gourmet</div><h3>Conjunto Mesa 12 Lugares + Cadeiras – Área Gourmet Coberta</h3><div class="materials">Madeira Maciça · Verniz Natural · 13 peças</div><div class="product-price">R$ 9.990,00<span class="installments">12x de R$ 832,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG-20251216-WA0058.jpg" alt="Cadeiras Windsor em Varanda Gourmet 10 Lugares" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Cadeira para Varanda</div><h3>Cadeira Windsor – Área Gourmet, Tratamento Externo</h3><div class="materials">Madeira Maciça · Verniz Externo · Alt. 90cm</div><div class="product-price">R$ 540,00<span class="installments">6x de R$ 90,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20250818_103408_040.jpg" alt="Conjunto Mesa 8 Lugares com Cadeiras Windsor Varanda" /><span class="product-badge">Entregue</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Conjunto Varanda</div><h3>Conjunto Mesa 8 Lugares + 8 Cadeiras Windsor – Varanda</h3><div class="materials">Madeira Maciça · Verniz Natural · 9 peças</div><div class="product-price">R$ 7.490,00<span class="installments">12x de R$ 624,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20251222_102006_711.jpg" alt="Mesa Redonda Base Ripada para Varanda" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Mesa para Varanda</div><h3>Mesa Redonda Base Ripada – Área Externa, 8 Lugares</h3><div class="materials">Madeira Maciça · Verniz Externo · Ø 140cm</div><div class="product-price">R$ 3.290,00<span class="installments">12x de R$ 274,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20251222_101322_172.jpg" alt="Conjunto Mesa 10 Lugares Área Externa Coberta" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Área Gourmet</div><h3>Conjunto Mesa 10 Lugares + 10 Cadeiras – Área Coberta</h3><div class="materials">Madeira Maciça · Verniz Natural · 11 peças</div><div class="product-price">R$ 8.990,00<span class="installments">12x de R$ 749,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG-20251215-WA0039.jpg" alt="Mesa Retangular Grande Área Externa" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Mesa Externa</div><h3>Mesa Retangular Grande – Área Externa, Madeira Tratada</h3><div class="materials">Madeira Maciça · Verniz Externo · 200×80cm</div><div class="product-price">R$ 2.890,00<span class="installments">12x de R$ 240,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG-20251216-WA0060.jpg" alt="Cadeiras e Mesa Varanda Rústica" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Conjunto Varanda</div><h3>Conjunto Varanda – Mesa + 6 Cadeiras, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Externo · 7 peças</div><div class="product-price">R$ 5.490,00<span class="installments">12x de R$ 457,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+    </div>
+    <div class="pagination reveal"><button class="page-btn active">1</button><button class="page-btn">2</button></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+<script>document.getElementById('filterToggle').addEventListener('click',()=>document.getElementById('filtersPanel').classList.toggle('open'));</script>
+</body>
+</html>

@@ -179,9 +179,15 @@ function renderHeader() {
         <div class="dropdown">
           <a href="conjuntos.html">Sala de Jantar</a>
           <a href="conjuntos.html">Sala de Estar</a>
-          <a href="conjuntos.html">Varanda</a>
-          <a href="conjuntos.html">Cozinha</a>
+          <a href="varanda.html">Varanda</a>
+          <a href="cozinha.html">Cozinha</a>
         </div>
+      </div>
+      <div class="nav-item">
+        <a href="cozinha.html">Cozinha</a>
+      </div>
+      <div class="nav-item">
+        <a href="varanda.html">Varanda &amp; Jardim</a>
       </div>
       <div class="nav-item"><a href="orcamento.html" style="background:var(--accent)">Solicitar Orçamento</a></div>
     </div>
@@ -195,6 +201,8 @@ function renderHeader() {
     <a href="aparadores.html">Aparadores</a>
     <a href="estantes.html">Estantes &amp; Racks</a>
     <a href="conjuntos.html">Conjuntos</a>
+    <a href="cozinha.html">Cozinha</a>
+    <a href="varanda.html">Varanda &amp; Jardim</a>
     <a href="orcamento.html" style="background:var(--accent);font-weight:700">Solicitar Orçamento</a>
   </div>`;
 }
@@ -223,7 +231,7 @@ function renderFooter() {
           </a>
           <p>Móveis rústicos artesanais com mais de 15 anos de tradição. Qualidade, beleza natural e entrega em todo o Brasil.</p>
           <div class="social">
-            <a href="#">📷</a><a href="#">👍</a><a href="#">📌</a><a href="#">▶</a>
+            <a href="https://www.instagram.com/encantorusticofsa" target="_blank" rel="noopener" title="Instagram">📷</a><a href="#" title="Facebook">👍</a><a href="#" title="Pinterest">📌</a><a href="#" title="YouTube">▶</a>
           </div>
         </div>
         <div class="footer-col">
@@ -241,10 +249,10 @@ function renderFooter() {
         <div class="footer-col">
           <h4>Institucional</h4>
           <ul>
-            <li><a href="#">Sobre Nós</a></li>
-            <li><a href="#">Política de Entrega</a></li>
-            <li><a href="#">Trocas e Devoluções</a></li>
-            <li><a href="#">Privacidade</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="politica-entrega.html">Política de Entrega</a></li>
+            <li><a href="trocas.html">Trocas e Devoluções</a></li>
+            <li><a href="privacidade.html">Privacidade</a></li>
             <li><a href="orcamento.html">Solicitar Orçamento</a></li>
           </ul>
         </div>

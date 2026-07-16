@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "C:\\Users\\ryanl\\encanto-rustico"
+publish = "/Users/macbookm2/encanto-rustico"
 publishOrigin = "default"
 
 [build.environment]

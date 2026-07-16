@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: encanto-rustico
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .

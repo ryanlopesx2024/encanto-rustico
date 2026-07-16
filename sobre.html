@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre Nós – Encanto Rústico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="stylesheet" href="assets/base.css" />
+  <style>
+    .sobre-hero { position:relative; height:420px; overflow:hidden; }
+    .sobre-hero img { width:100%; height:100%; object-fit:cover; object-position:center; }
+    .sobre-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(44,26,14,.45), rgba(44,26,14,.7)); display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem; }
+    .sobre-hero-overlay h1 { font-family:'Playfair Display',serif; font-size:2.8rem; color:#fff; margin-bottom:.6rem; }
+    .sobre-hero-overlay p { color:rgba(255,255,255,.85); font-size:1.05rem; max-width:500px; }
+
+    .sobre-section { max-width:1100px; margin:0 auto; padding:4rem 1.5rem; }
+    .sobre-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    @media(max-width:768px){ .sobre-grid{ grid-template-columns:1fr; gap:2rem; } }
+    .sobre-grid img { width:100%; height:400px; object-fit:cover; border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); }
+    .sobre-grid.reverse { direction:rtl; }
+    .sobre-grid.reverse > * { direction:ltr; }
+
+    .sobre-text h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--dark); margin-bottom:1rem; }
+    .sobre-text p { color:#5a4438; line-height:1.8; margin-bottom:1rem; font-size:.97rem; }
+    .sobre-text .label { font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:.5rem; }
+
+    .stats-bar { background:var(--dark); padding:3rem 1.5rem; }
+    .stats-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; text-align:center; }
+    @media(max-width:600px){ .stats-inner{ grid-template-columns:repeat(2,1fr); } }
+    .stat-num { font-family:'Playfair Display',serif; font-size:2.8rem; color:var(--light); font-weight:700; }
+    .stat-label { font-size:.8rem; color:rgba(232,196,154,.7); text-transform:uppercase; letter-spacing:.1em; margin-top:.25rem; }
+
+    .valores-section { background:var(--warm); padding:4rem 1.5rem; }
+    .valores-inner { max-width:1100px; margin:0 auto; }
+    .valores-inner h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--dark); text-align:center; margin-bottom:2.5rem; }
+    .valores-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    @media(max-width:768px){ .valores-grid{ grid-template-columns:1fr; } }
+    .valor-card { background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow); text-align:center; }
+    .valor-icon { font-size:2.2rem; margin-bottom:1rem; display:block; }
+    .valor-card h3 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--dark); margin-bottom:.7rem; }
+    .valor-card p { color:#7a5f4e; font-size:.88rem; line-height:1.7; }
+
+    .madeiras-section { max-width:1100px; margin:0 auto; padding:4rem 1.5rem; }
+    .madeiras-section h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--dark); text-align:center; margin-bottom:.5rem; }
+    .madeiras-section .subtitle { text-align:center; color:#7a5f4e; margin-bottom:2.5rem; font-size:.95rem; }
+    .madeiras-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    @media(max-width:768px){ .madeiras-grid{ grid-template-columns:repeat(2,1fr); } }
+    .madeira-chip { background:var(--cream); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:1.2rem; text-align:center; }
+    .madeira-chip .nome { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dark); font-weight:600; margin-bottom:.3rem; }
+    .madeira-chip .desc { font-size:.78rem; color:#9e7f68; line-height:1.5; }
+
+    .cta-sobre { background:linear-gradient(135deg, var(--primary), var(--dark)); text-align:center; padding:4rem 1.5rem; color:#fff; }
+    .cta-sobre h2 { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:.8rem; }
+    .cta-sobre p { opacity:.85; font-size:.97rem; max-width:500px; margin:0 auto 2rem; }
+    .cta-sobre .btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .btn-light { background:var(--light); color:var(--dark); padding:.85rem 2rem; border-radius:var(--radius); font-weight:700; font-family:'Lato',sans-serif; text-decoration:none; font-size:.9rem; }
+    .btn-outline-light { border:2px solid rgba(255,255,255,.6); color:#fff; padding:.85rem 2rem; border-radius:var(--radius); font-weight:700; font-family:'Lato',sans-serif; text-decoration:none; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Sobre Nós</span></div></div>
+
+<!-- Hero -->
+<div class="sobre-hero">
+  <img src="assets/images/IMG_20251222_101322_172.jpg" alt="Encanto Rústico – Móveis Artesanais" />
+  <div class="sobre-hero-overlay reveal">
+    <div>
+      <div class="label" style="color:var(--light);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:.5rem">Nossa história</div>
+      <h1>Encanto Rústico</h1>
+      <p>Artesanato, tradição e amor pela madeira desde o início</p>
+    </div>
+  </div>
+</div>
+
+<!-- Nossa história -->
+<div class="sobre-section">
+  <div class="sobre-grid reveal">
+    <img src="assets/images/IMG_20250818_103408_040.jpg" alt="Móveis Encanto Rústico em ambiente real" />
+    <div class="sobre-text">
+      <div class="label">Quem somos</div>
+      <h2>Paixão pela Madeira, Arte nas Mãos</h2>
+      <p>A Encanto Rústico nasceu da admiração genuína pela beleza natural da madeira e do desejo de transformar cada peça em uma obra única. Nossa história começa em Feira de Santana, Bahia, onde cada árvore conta uma história e cada veio de madeira guarda uma memória.</p>
+      <p>Com mais de 15 anos dedicados à marcenaria artesanal, desenvolvemos um processo que respeita a natureza da madeira — suas imperfeições, texturas e tons únicos — para criar móveis que duram gerações e embelezam lares em todo o Brasil.</p>
+      <p>Cada peça que sai da nossa marcenaria carrega a identidade de quem a fez: mãos experientes, olhos atentos e um cuidado que nenhuma linha de produção industrial é capaz de reproduzir.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">Anos de tradição</div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num">2.000+</div>
+      <div class="stat-label">Peças entregues</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Clientes satisfeitos</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-num">27</div>
+      <div class="stat-label">Estados atendidos</div>
+    </div>
+  </div>
+</div>
+
+<!-- Nosso processo -->
+<div class="sobre-section">
+  <div class="sobre-grid reverse reveal">
+    <img src="assets/images/IMG-20251215-WA0035.jpg" alt="Conjunto rústico em área gourmet" />
+    <div class="sobre-text">
+      <div class="label">Como trabalhamos</div>
+      <h2>Do Tronco ao Lar</h2>
+      <p>Nossa madeira é selecionada com rigor. Trabalhamos com espécies de reflorestamento certificadas, garantindo que cada compra contribui para um futuro sustentável sem abrir mão da qualidade excepcional que nossos clientes esperam.</p>
+      <p>O processo começa com a secagem adequada da madeira, passa pelo aplainamento, corte e montagem manual, e culmina em um acabamento artesanal com verniz natural ou tingimento a pedido do cliente.</p>
+      <p>Cada encomenda é tratada como única. Desenvolvemos projetos sob medida que se adaptam perfeitamente ao espaço e ao estilo de vida de cada cliente, do tamanho da mesa ao tipo de acabamento.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Valores -->
+<div class="valores-section">
+  <div class="valores-inner">
+    <h2 class="reveal">Nossos Valores</h2>
+    <div class="valores-grid">
+      <div class="valor-card reveal">
+        <span class="valor-icon">🌿</span>
+        <h3>Sustentabilidade</h3>
+        <p>Trabalhamos exclusivamente com madeiras certificadas de reflorestamento, respeitando o meio ambiente e garantindo um produto com origem responsável.</p>
+      </div>
+      <div class="valor-card reveal reveal-delay-1">
+        <span class="valor-icon">🪚</span>
+        <h3>Artesanato</h3>
+        <p>Cada peça é produzida à mão por marceneiros experientes. Não há linha de produção em série — há cuidado, técnica e dedicação em cada etapa.</p>
+      </div>
+      <div class="valor-card reveal reveal-delay-2">
+        <span class="valor-icon">❤</span>
+        <h3>Satisfação do Cliente</h3>
+        <p>Nosso compromisso vai além da entrega. Acompanhamos cada pedido do orçamento à montagem, garantindo que você receba exatamente o que imaginou.</p>
+      </div>
+      <div class="valor-card reveal">
+        <span class="valor-icon">🏆</span>
+        <h3>Qualidade</h3>
+        <p>Usamos apenas madeira maciça de primeira linha, acabamentos de alta durabilidade e ferragens resistentes. Nossos móveis são feitos para durar décadas.</p>
+      </div>
+      <div class="valor-card reveal reveal-delay-1">
+        <span class="valor-icon">✏</span>
+        <h3>Personalização</h3>
+        <p>Cada espaço é único e seu móvel deve ser também. Desenvolvemos peças sob medida, adaptadas ao seu ambiente, cores e necessidades específicas.</p>
+      </div>
+      <div class="valor-card reveal reveal-delay-2">
+        <span class="valor-icon">🚚</span>
+        <h3>Entrega Nacional</h3>
+        <p>Entregamos para todo o Brasil com embalagem especial para garantir que seu móvel chegue perfeito, do mesmo jeito que saiu da nossa marcenaria.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Madeiras -->
+<div class="madeiras-section">
+  <h2 class="reveal">As Madeiras que Usamos</h2>
+  <p class="subtitle reveal">Espécies selecionadas pelo desempenho, beleza e origem sustentável</p>
+  <div class="madeiras-grid">
+    <div class="madeira-chip reveal">
+      <div class="nome">Peroba Rosa</div>
+      <div class="desc">Madeira nobre com tons rosados únicos. Alta durabilidade e resistência.</div>
+    </div>
+    <div class="madeira-chip reveal reveal-delay-1">
+      <div class="nome">Tauari</div>
+      <div class="desc">Tom dourado claro com veios suaves. Excelente para acabamentos refinados.</div>
+    </div>
+    <div class="madeira-chip reveal reveal-delay-2">
+      <div class="nome">Eucalipto</div>
+      <div class="desc">Espécie de reflorestamento com alta resistência. Ótima para ambientes externos.</div>
+    </div>
+    <div class="madeira-chip reveal reveal-delay-3">
+      <div class="nome">Maciço Natural</div>
+      <div class="desc">Selecionado conforme disponibilidade. Sempre certificado e de origem controlada.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-sobre">
+  <h2 class="reveal">Pronto para Criar o Seu Móvel?</h2>
+  <p class="reveal">Entre em contato, descreva o que você precisa e nossa equipe elabora um orçamento personalizado sem compromisso.</p>
+  <div class="btns reveal">
+    <a href="orcamento.html" class="btn-light">Solicitar Orçamento</a>
+    <a href="https://www.instagram.com/encantorusticofsa" target="_blank" rel="noopener" class="btn-outline-light">Ver no Instagram</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js"></script>
+</body>
+</html>
