@@ -328,19 +328,8 @@
         <div class="feature-item"><span class="icon">✏️</span> Personalização grátis</div>
       </div>
 
-      <!-- Shipping calculator -->
-      <div class="shipping-calc">
-        <h4>🚚 Calcular Frete</h4>
-        <div class="cep-row">
-          <input class="cep-input" id="cepInput" type="text" placeholder="00000-000" maxlength="9" />
-          <button class="cep-btn" id="calcFrete">Calcular</button>
-        </div>
-        <div class="shipping-results" id="shippingResults"></div>
-      </div>
-
       <div class="cta-group">
         <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Mesa%20de%20Jantar%20R%C3%BAstica%206%20Lugares." class="btn btn-wpp" target="_blank">💬 Pedir pelo WhatsApp</a>
-        <a href="orcamento.html" class="btn btn-secondary">📋 Solicitar Orçamento</a>
       </div>
       <div style="font-size:.75rem;color:#9e7f68;margin-top:.8rem;text-align:center">✅ Produto artesanal · Prazo de produção: 15–25 dias úteis</div>
     </div>
@@ -593,89 +582,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById('tab-' + this.dataset.tab).classList.add('active');
   });
 });
-
-// ── Correios / Frete Calculator ───────────────────────────
-const CEP_ORIGEM = '01310100'; // SP - substitua pelo CEP da loja
-const SHIPPING_TABLE = {
-  // [estado]: [prazo PAC, prazo SEDEX, frete PAC, frete SEDEX]
-  'SP': [5,  2,  0,    89.90],
-  'RJ': [6,  2,  0,    99.90],
-  'MG': [6,  2,  0,    94.90],
-  'ES': [7,  3,  69.90, 109.90],
-  'PR': [7,  3,  74.90, 114.90],
-  'SC': [8,  3,  79.90, 119.90],
-  'RS': [9,  4,  84.90, 124.90],
-  'MS': [9,  4,  89.90, 129.90],
-  'MT': [10, 5, 99.90, 149.90],
-  'GO': [9,  4, 89.90, 139.90],
-  'DF': [8,  3, 84.90, 129.90],
-  'BA': [10, 5, 99.90, 154.90],
-  'PE': [11, 5,109.90, 164.90],
-  'CE': [12, 6,114.90, 169.90],
-  'MA': [13, 6,119.90, 174.90],
-  'PA': [14, 7,129.90, 184.90],
-  'AM': [16, 8,149.90, 199.90],
-};
-const PRODUCT_VALUE = 2890;
-const FREE_SHIPPING_THRESHOLD = 2000;
-
-function formatCEP(v) {
-  return v.replace(/\D/g,'').replace(/(\d{5})(\d)/,'$1-$2').slice(0,9);
-}
-const cepInput = document.getElementById('cepInput');
-cepInput.addEventListener('input', () => { cepInput.value = formatCEP(cepInput.value); });
-
-document.getElementById('calcFrete').addEventListener('click', async () => {
-  const rawCEP = cepInput.value.replace(/\D/g,'');
-  if (rawCEP.length !== 8) { showShippingError('CEP inválido. Digite os 8 dígitos.'); return; }
-  const btn = document.getElementById('calcFrete');
-  btn.disabled = true; btn.textContent = '…';
-  showShippingLoading();
-  try {
-    const res = await fetch(`https://viacep.com.br/ws/${rawCEP}/json/`);
-    const data = await res.json();
-    if (data.erro) { showShippingError('CEP não encontrado. Verifique e tente novamente.'); return; }
-    const uf = data.uf;
-    const table = SHIPPING_TABLE[uf] || [15, 7, 139.90, 199.90];
-    const [pacDays, sedexDays, pacPrice, sedexPrice] = table;
-    const freeShipping = PRODUCT_VALUE >= FREE_SHIPPING_THRESHOLD;
-    showShippingOptions(data, uf, pacDays, sedexDays, freeShipping ? 0 : pacPrice, sedexPrice, freeShipping);
-  } catch(e) {
-    showShippingError('Não foi possível calcular. Tente novamente ou entre em contato.');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Calcular';
-  }
-});
-
-function showShippingLoading() {
-  const el = document.getElementById('shippingResults');
-  el.classList.add('show');
-  el.innerHTML = '<div class="shipping-loading">🔍 Consultando…</div>';
-}
-function showShippingError(msg) {
-  const el = document.getElementById('shippingResults');
-  el.classList.add('show');
-  el.innerHTML = `<div class="shipping-error">⚠️ ${msg}</div>`;
-}
-function showShippingOptions(addr, uf, pacDays, sedexDays, pacPrice, sedexPrice, freeShipping) {
-  const el = document.getElementById('shippingResults');
-  const pacFree = freeShipping || pacPrice === 0;
-  el.innerHTML = `
-    <div class="shipping-option ${pacFree ? 'free-shipping' : ''}">
-      <div><div class="shipping-name">📦 PAC – Correios</div><div class="shipping-days">Até ${pacDays} dias úteis após produção</div></div>
-      <div class="shipping-price">${pacFree ? '🎉 GRÁTIS' : 'R$ ' + pacPrice.toFixed(2).replace('.',',')}</div>
-    </div>
-    <div class="shipping-option">
-      <div><div class="shipping-name">⚡ SEDEX – Correios</div><div class="shipping-days">Até ${sedexDays} dias úteis após produção</div></div>
-      <div class="shipping-price">R$ ${sedexPrice.toFixed(2).replace('.',',')}</div>
-    </div>
-    <div class="shipping-address">
-      📍 Entregando para: <strong>${addr.logradouro ? addr.logradouro + ', ' : ''}${addr.bairro ? addr.bairro + ' – ' : ''}${addr.localidade}/${uf}</strong>
-      <br>⚠️ Prazo conta após a produção (15–25 dias úteis). <a href="orcamento.html">Dúvidas? Fale conosco.</a>
-    </div>
-  `;
-  el.classList.add('show');
-}
 
 // ══════════════════════════════════════════════════════════
 //  ROOM VISUALIZER  – Drag-and-drop completo

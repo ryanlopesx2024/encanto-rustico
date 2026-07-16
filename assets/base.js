@@ -100,11 +100,6 @@ function renderHeader() {
       <a href="index.html" class="logo">
         <img class="logo-img" src="assets/images/logo.png" alt="Encanto Rústico – Móveis Artesanais" />
       </a>
-      <div class="header-actions">
-        <a href="#"><span class="icon">👤</span>Minha Conta</a>
-        <a href="#"><span class="icon">❤</span>Favoritos</a>
-        <a href="orcamento.html"><span class="icon">🛒</span>Orçamento</a>
-      </div>
     </div>
   </header>
   <nav>
