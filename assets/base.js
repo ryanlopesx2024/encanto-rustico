@@ -143,7 +143,16 @@ function renderHeader() {
         <div class="dropdown">
           <a href="aparadores.html">Aparadores de Sala</a>
           <a href="aparadores.html">Aparadores de Quarto</a>
-          <a href="aparadores.html">Buffets</a>
+          <a href="buffet-cristaleira.html">Buffets</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="armarios.html">Armários <span class="arrow">▼</span></a>
+        <div class="dropdown">
+          <a href="armarios.html">Armários</a>
+          <a href="armarios.html">Armários Aéreos</a>
+          <a href="buffet-cristaleira.html">Buffets</a>
+          <a href="buffet-cristaleira.html">Cristaleiras</a>
         </div>
       </div>
       <div class="nav-item">
@@ -151,7 +160,7 @@ function renderHeader() {
         <div class="dropdown">
           <a href="estantes.html">Estantes de Livros</a>
           <a href="estantes.html">Racks para TV</a>
-          <a href="estantes.html">Cristaleiras</a>
+          <a href="buffet-cristaleira.html">Cristaleiras</a>
           <a href="estantes.html">Prateleiras</a>
         </div>
       </div>
@@ -165,10 +174,15 @@ function renderHeader() {
         </div>
       </div>
       <div class="nav-item">
-        <a href="cozinha.html">Cozinha</a>
+        <a href="cozinha.html">Ambientes <span class="arrow">▼</span></a>
+        <div class="dropdown">
+          <a href="cozinha.html">Cozinha</a>
+          <a href="varanda.html">Varanda &amp; Jardim</a>
+          <a href="conjuntos.html">Sala de Jantar</a>
+        </div>
       </div>
       <div class="nav-item">
-        <a href="varanda.html">Varanda &amp; Jardim</a>
+        <a href="decoracao.html">Decoração</a>
       </div>
       <div class="nav-item"><a href="orcamento.html" style="background:var(--accent)">Solicitar Orçamento</a></div>
     </div>
@@ -180,10 +194,13 @@ function renderHeader() {
     <a href="cadeiras.html">Cadeiras</a>
     <a href="banquetas.html">Banquetas</a>
     <a href="aparadores.html">Aparadores</a>
+    <a href="armarios.html">Armários</a>
+    <a href="buffet-cristaleira.html">Buffets &amp; Cristaleiras</a>
     <a href="estantes.html">Estantes &amp; Racks</a>
     <a href="conjuntos.html">Conjuntos</a>
     <a href="cozinha.html">Cozinha</a>
     <a href="varanda.html">Varanda &amp; Jardim</a>
+    <a href="decoracao.html">Decoração</a>
     <a href="orcamento.html" style="background:var(--accent);font-weight:700">Solicitar Orçamento</a>
   </div>`;
 }
@@ -210,8 +227,11 @@ function renderFooter() {
             <li><a href="cadeiras.html">Cadeiras</a></li>
             <li><a href="banquetas.html">Banquetas</a></li>
             <li><a href="aparadores.html">Aparadores</a></li>
+            <li><a href="armarios.html">Armários</a></li>
+            <li><a href="buffet-cristaleira.html">Buffets &amp; Cristaleiras</a></li>
             <li><a href="estantes.html">Estantes &amp; Racks</a></li>
             <li><a href="conjuntos.html">Conjuntos</a></li>
+            <li><a href="decoracao.html">Decoração</a></li>
           </ul>
         </div>
         <div class="footer-col">

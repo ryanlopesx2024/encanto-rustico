@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decoração Rústica – Encanto Rústico</title>
+  <meta name="description" content="Decoração rústica artesanal: quadros de flores em madeira, painéis decorativos e acessórios feitos à mão para dar charme à sua casa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="assets/base.css?v=2" />
+  <style>
+    .filter-mobile-toggle{display:none;width:100%;padding:.7rem 1rem;background:var(--primary);color:#fff;border:none;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-bottom:1rem}
+    @media(max-width:900px){.filter-mobile-toggle{display:block}.filters{display:none}.filters.open{display:block;position:static}}
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Decoração</span></div></div>
+<div class="page-hero">
+  <img src="assets/images/IMG_20260328_130931_991.jpg" alt="Decoração Rústica Artesanal em Madeira" />
+  <div class="page-hero-content reveal"><div class="label">Detalhes que encantam</div><h1>Decoração Rústica</h1><p>Quadros, painéis e acessórios artesanais em madeira para sua casa</p></div>
+</div>
+
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto"><div class="tags"><span class="tag active">Todos</span><span class="tag">Quadros</span><span class="tag">Painéis</span><span class="tag">Acessórios</span></div></div>
+</div>
+
+<div class="catalog-layout">
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+      <div class="filter-group"><h4>Categoria</h4>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">8</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Quadros</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Painéis</label><span class="count">3</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Acessórios</label><span class="count">1</span></div>
+      </div>
+      <div class="filter-group"><h4>Preço</h4>
+        <div class="price-range"><input type="range" id="priceRange" min="50" max="1500" value="1500" step="50" /><div class="price-labels"><span>R$ 50</span><span id="priceMax">R$ 1.500</span></div></div>
+      </div>
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>8 produtos</strong> encontrados</div>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
+        <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130931_991.jpg" alt="Par de Quadros Rústicos Flores em Madeira" /><span class="product-badge">Mais Vendido</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Quadros</div><h3>Par de Quadros Flores em Madeira – Vermelho e Amarelo</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 60×35cm</div><div class="product-price">R$ 390,00<span class="installments">6x de R$ 65,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130958_945.jpg" alt="Quadro Rústico Flores Coloridas Moldura Branca" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Quadros</div><h3>Quadro Flores Coloridas – Moldura Patinada Branca</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 70×50cm</div><div class="product-price">R$ 450,00<span class="installments">6x de R$ 75,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130934_165.jpg" alt="Par de Quadros Rústicos Trigo em Madeira" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Quadros</div><h3>Par de Quadros Trigo em Madeira – Moldura Natural</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 60×35cm</div><div class="product-price">R$ 390,00<span class="installments">6x de R$ 65,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_111541_967.jpg" alt="Painel Rústico Margaridas Moldura Patinada" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Painéis</div><h3>Painel Margaridas – Moldura Patinada, Peça Grande</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 110×60cm</div><div class="product-price">R$ 690,00<span class="installments">10x de R$ 69,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130947_338.jpg" alt="Painel Rústico Bananeira em Madeira" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Painéis</div><h3>Painel Bananeira – Relevo em Madeira, Peça Única</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 90×60cm</div><div class="product-price">R$ 590,00<span class="installments">10x de R$ 59,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_131001_778.jpg" alt="Painel Rústico Fruteira em Madeira" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Painéis</div><h3>Painel Fruteira – Relevo em Madeira Colorido</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 90×60cm</div><div class="product-price">R$ 590,00<span class="installments">10x de R$ 59,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_20260328_130957_311.jpg" alt="Quadro Rústico Buquê Colorido em Madeira" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Quadros</div><h3>Quadro Buquê Colorido – Flores em Relevo</h3><div class="materials">Madeira Maciça · Pintura Artesanal · 70×50cm</div><div class="product-price">R$ 450,00<span class="installments">6x de R$ 75,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_0945.HEIC.jpg" alt="Suporte Rústico para Xícaras em Madeira e Ferro" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Acessórios</div><h3>Suporte para Xícaras – Base em Madeira e Ferro</h3><div class="materials">Madeira Maciça · Ferro · Alt. 40cm</div><div class="product-price">R$ 150,00<span class="installments">3x de R$ 50,00 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+    </div>
+    <div class="pagination reveal"><button class="page-btn active">1</button></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js?v=2"></script>
+<script>document.getElementById('filterToggle').addEventListener('click',()=>document.getElementById('filtersPanel').classList.toggle('open'));</script>
+</body>
+</html>

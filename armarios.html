@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armários Rústicos – Encanto Rústico</title>
+  <meta name="description" content="Armários rústicos em madeira maciça: armários altos, paneleiros e armários aéreos artesanais para cozinha e sala." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.21/dist/lenis.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="assets/base.css?v=2" />
+  <style>
+    .filter-mobile-toggle{display:none;width:100%;padding:.7rem 1rem;background:var(--primary);color:#fff;border:none;font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-bottom:1rem}
+    @media(max-width:900px){.filter-mobile-toggle{display:block}.filters{display:none}.filters.open{display:block;position:static}}
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<div class="breadcrumb"><div class="breadcrumb-inner"><a href="index.html">Início</a><span class="breadcrumb-sep">›</span><span>Armários</span></div></div>
+<div class="page-hero">
+  <img src="assets/images/IMG_0928.HEIC.jpg" alt="Armários Rústicos em Madeira Maciça" />
+  <div class="page-hero-content reveal"><div class="label">Organização com charme</div><h1>Armários Rústicos</h1><p>Armários altos, baixos e com vitrô em madeira maciça, feitos à mão</p></div>
+</div>
+
+<div style="background:var(--white);border-bottom:1px solid var(--border);padding:.8rem 1.5rem">
+  <div style="max-width:1280px;margin:0 auto"><div class="tags"><span class="tag active">Todos</span><span class="tag">Armários Altos</span><span class="tag">Armários Baixos</span><span class="tag">Com Vitrô</span></div></div>
+</div>
+
+<div class="catalog-layout">
+  <aside>
+    <button class="filter-mobile-toggle" id="filterToggle">⚙ Filtros</button>
+    <div class="filters" id="filtersPanel">
+      <h3>🔎 Filtrar</h3>
+      <div class="filter-group"><h4>Categoria</h4>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">7</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Armários Altos</label><span class="count">2</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Armários Baixos</label><span class="count">4</span></div>
+        <div class="filter-option"><input type="checkbox" /><label>Com Vitrô</label><span class="count">1</span></div>
+      </div>
+      <div class="filter-group"><h4>Preço</h4>
+        <div class="price-range"><input type="range" id="priceRange" min="500" max="6000" value="6000" step="100" /><div class="price-labels"><span>R$ 500</span><span id="priceMax">R$ 6.000</span></div></div>
+      </div>
+      <button class="filter-clear">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <div class="catalog-main">
+    <div class="catalog-toolbar reveal">
+      <div class="catalog-count"><strong>7 produtos</strong> encontrados</div>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
+        <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_0909.HEIC.jpg" alt="Armário Alto Rústico 1 Porta com Prateleiras" /><span class="product-badge">Mais Vendido</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Alto</div><h3>Armário Alto 1 Porta – Prateleiras Internas, Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 180cm</div><div class="product-price">R$ 2.490,00<span class="installments">12x de R$ 207,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_0910.HEIC.jpg" alt="Armário Alto Rústico Aberto com Prateleiras" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Alto</div><h3>Armário Alto Aberto – 4 Prateleiras + Gaveta</h3><div class="materials">Madeira Maciça · Verniz Natural · Alt. 180cm</div><div class="product-price">R$ 2.190,00<span class="installments">12x de R$ 182,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_0928.HEIC.jpg" alt="Armário Baixo Rústico 4 Gavetas e 4 Portas" /><span class="product-badge">Mais Vendido</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Baixo</div><h3>Armário Baixo 4 Gavetas + 4 Portas – Madeira Maciça</h3><div class="materials">Madeira Maciça · Verniz Natural · 140cm</div><div class="product-price">R$ 2.690,00<span class="installments">12x de R$ 224,17 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_0927.HEIC.jpg" alt="Armário Baixo Rústico com Ferragens" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Baixo</div><h3>Armário Baixo 4 Gavetas + 4 Portas – Ferragens Rústicas</h3><div class="materials">Madeira Maciça · Verniz Natural · 160cm</div><div class="product-price">R$ 2.890,00<span class="installments">12x de R$ 240,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-image"><img src="assets/images/IMG_0931.HEIC.jpg" alt="Armário Baixo Rústico Madeira Clara" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Baixo</div><h3>Armário Baixo Rústico – Gavetas e Portas, Madeira Clara</h3><div class="materials">Madeira Maciça · Verniz Natural · 150cm</div><div class="product-price">R$ 2.590,00<span class="installments">12x de R$ 215,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-image"><img src="assets/images/IMG_0913.HEIC.jpg" alt="Armário Balcão Rústico 3 Portas 3 Gavetas" /><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Armário Baixo</div><h3>Armário Balcão 3 Gavetas + 3 Portas – Palhinha Natural</h3><div class="materials">Madeira Maciça · Verniz Natural · 160cm</div><div class="product-price">R$ 2.790,00<span class="installments">12x de R$ 232,50 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-card-image"><img src="assets/images/IMG_0967.HEIC.jpg" alt="Armário Rústico com Portas de Vidro" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html'">👁</button></div></div>
+        <div class="product-info"><div class="category">Com Vitrô</div><h3>Armário com Vitrô – Portas de Vidro + Gavetas</h3><div class="materials">Madeira Maciça · Vidro · 130cm</div><div class="product-price">R$ 3.190,00<span class="installments">12x de R$ 265,84 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html'">Ver Produto</button></div>
+      </div>
+
+    </div>
+    <div class="pagination reveal"><button class="page-btn active">1</button></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+<script src="assets/base.js?v=2"></script>
+<script>document.getElementById('filterToggle').addEventListener('click',()=>document.getElementById('filtersPanel').classList.toggle('open'));</script>
+</body>
+</html>

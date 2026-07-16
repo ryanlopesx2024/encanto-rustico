@@ -124,12 +124,12 @@ header.scrolled { box-shadow: 0 2px 22px rgba(44,26,14,.22); }
 
 /* ─── NAVIGATION ─────────────────────────────────────────── */
 nav { background: var(--primary); position: relative; }
-.nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: stretch; }
+.nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: stretch; flex-wrap: wrap; justify-content: center; }
 .nav-item { position: relative; }
 .nav-item > a {
   display: flex; align-items: center; gap: .35rem;
-  padding: .8rem 1.15rem; color: var(--white);
-  font-size: .82rem; font-weight: 600; letter-spacing: .04em;
+  padding: .8rem .6rem; color: var(--white);
+  font-size: .75rem; font-weight: 600; letter-spacing: .02em;
   text-transform: uppercase; transition: background .2s; white-space: nowrap;
 }
 .nav-item > a.active { background: rgba(0,0,0,.2); }
@@ -160,7 +160,7 @@ nav { background: var(--primary); position: relative; }
   display: none; flex-direction: column; background: var(--primary);
   max-height: 0; overflow: hidden; transition: max-height .4s ease;
 }
-.mobile-menu.open { max-height: 700px; }
+.mobile-menu.open { max-height: 900px; }
 .mobile-menu a {
   display: block; padding: .8rem 1.5rem; color: var(--white);
   font-size: .9rem; font-weight: 600;
