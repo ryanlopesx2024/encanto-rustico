@@ -100,6 +100,9 @@ function renderHeader() {
       <a href="index.html" class="logo">
         <img class="logo-img" src="assets/images/logo.png" alt="Encanto Rústico – Móveis Artesanais" />
       </a>
+      <div class="header-actions">
+        <a href="admin.html" class="adm-link">ADM</a>
+      </div>
     </div>
   </header>
   <nav>
@@ -197,6 +200,7 @@ function renderHeader() {
     <a href="varanda.html">Varanda &amp; Jardim</a>
     <a href="decoracao.html">Decoração</a>
     <a href="orcamento.html" style="background:var(--accent);font-weight:700">Solicitar Orçamento</a>
+    <a href="admin.html">ADM</a>
   </div>`;
 }
 

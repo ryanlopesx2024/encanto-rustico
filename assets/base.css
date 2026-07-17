@@ -120,6 +120,8 @@ header.scrolled { box-shadow: 0 2px 22px rgba(44,26,14,.22); }
   transition: color .2s; font-weight: 600; letter-spacing: .04em;
 }
 .header-actions a:hover { color: var(--accent); }
+.adm-link { border: 1.5px solid var(--border); border-radius: 20px; padding: .35rem .9rem; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: #7a5f4e; }
+.adm-link:hover { border-color: var(--accent); }
 .header-actions a span.icon { font-size: 1.3rem; }
 
 /* ─── NAVIGATION ─────────────────────────────────────────── */
