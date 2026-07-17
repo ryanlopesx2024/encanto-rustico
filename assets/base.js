@@ -244,7 +244,7 @@ function renderFooter() {
           <ul>
             <li style="margin-bottom:.7rem">
               <span style="font-size:.78rem;color:#9e7f68;display:block">📞 WhatsApp</span>
-              <a href="https://wa.me/5511999999999" style="color:#E8C49A;font-weight:600">(11) 9 9999-9999</a>
+              <a href="https://wa.me/557591696872" style="color:#E8C49A;font-weight:600">(75) 9169-6872</a>
             </li>
             <li style="margin-bottom:.7rem">
               <span style="font-size:.78rem;color:#9e7f68;display:block">✉ E-mail</span>
@@ -252,7 +252,7 @@ function renderFooter() {
             </li>
             <li>
               <span style="font-size:.78rem;color:#9e7f68;display:block">🕐 Atendimento</span>
-              <span style="font-size:.82rem;color:#c9ad96">Seg–Sex 8h–18h | Sáb 9h–13h</span>
+              <span style="font-size:.82rem;color:#c9ad96">Seg–Sex 8h–18h | Sáb 8h–13h</span>
             </li>
           </ul>
         </div>
@@ -270,7 +270,7 @@ function renderFooter() {
       </div>
     </div>
   </footer>
-  <a href="https://wa.me/5511999999999" class="whatsapp-float" target="_blank" rel="noopener">💬</a>`;
+  <a href="https://wa.me/557591696872" class="whatsapp-float" target="_blank" rel="noopener">💬</a>`;
 }
 
 // Auto-inject header/footer if placeholders exist

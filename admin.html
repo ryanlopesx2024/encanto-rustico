@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo – Encanto Rústico</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --primary:#5C3D2E; --accent:#C9622E; --dark:#2C1A0E; --warm:#F5E9DA; --border:#E4D5C3; --white:#fff; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Lato',sans-serif; background:#FAF4EC; color:var(--dark); min-height:100vh; }
+    .hidden { display:none !important; }
+
+    /* Login */
+    .login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1rem; }
+    .login-card { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:2.2rem; width:100%; max-width:420px; box-shadow:0 20px 60px rgba(44,26,14,.12); }
+    .login-card img { height:70px; display:block; margin:0 auto 1.2rem; }
+    .login-card h1 { font-family:'Playfair Display',serif; font-size:1.3rem; text-align:center; margin-bottom:1.4rem; }
+    label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#7a5f4e; margin:.9rem 0 .35rem; }
+    input[type=password], input[type=text], textarea { width:100%; padding:.65rem .8rem; border:1.5px solid var(--border); border-radius:8px; font-family:'Lato',sans-serif; font-size:.9rem; background:#fffdfa; outline:none; }
+    input:focus, textarea:focus { border-color:var(--accent); }
+    .hint { font-size:.75rem; color:#9a7b63; margin-top:.35rem; line-height:1.5; }
+    .hint a { color:var(--accent); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; padding:.7rem 1.3rem; background:var(--accent); color:#fff; border:none; border-radius:8px; font-family:'Lato',sans-serif; font-size:.9rem; font-weight:700; cursor:pointer; transition:background .2s; }
+    .btn:hover { background:#a94f22; }
+    .btn.full { width:100%; margin-top:1.3rem; }
+    .btn.sec { background:var(--warm); color:var(--dark); }
+    .btn.sec:hover { background:#ecd9c2; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .erro { color:#c0392b; font-size:.82rem; margin-top:.7rem; text-align:center; }
+
+    /* Painel */
+    .topbar { background:var(--dark); color:#E8C49A; padding:.8rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .topbar strong { font-family:'Playfair Display',serif; letter-spacing:.04em; }
+    .topbar .acts { display:flex; gap:.6rem; }
+    .topbar button { background:rgba(255,255,255,.12); color:#E8C49A; border:none; border-radius:6px; padding:.4rem .8rem; font-size:.78rem; cursor:pointer; font-family:'Lato',sans-serif; }
+    .tabs { display:flex; gap:0; background:var(--white); border-bottom:2px solid var(--border); padding:0 1.5rem; overflow-x:auto; }
+    .tab-btn { padding:.85rem 1.3rem; border:none; background:none; font-family:'Lato',sans-serif; font-size:.88rem; font-weight:700; color:#7a5f4e; cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; white-space:nowrap; }
+    .tab-btn.active { color:var(--primary); border-bottom-color:var(--accent); }
+    .panel { max-width:1100px; margin:0 auto; padding:1.6rem 1.5rem 4rem; }
+    .panel h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin-bottom:.4rem; }
+    .panel .sub { font-size:.85rem; color:#7a5f4e; margin-bottom:1.4rem; line-height:1.6; }
+
+    .img-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:1rem; }
+    .img-card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .img-card img { width:100%; height:120px; object-fit:cover; display:block; background:var(--warm); }
+    .img-card .nm { font-size:.68rem; color:#7a5f4e; padding:.45rem .6rem 0; word-break:break-all; }
+    .img-card .row { padding:.5rem .6rem .7rem; }
+    .img-card .row button { width:100%; padding:.45rem; font-size:.78rem; font-weight:700; border:1.5px solid var(--accent); background:#fff; color:var(--accent); border-radius:6px; cursor:pointer; font-family:'Lato',sans-serif; }
+    .img-card .row button:hover { background:var(--accent); color:#fff; }
+
+    .drop { border:2px dashed var(--border); border-radius:12px; padding:2.5rem 1rem; text-align:center; color:#9a7b63; font-size:.9rem; background:var(--white); cursor:pointer; transition:border-color .2s; }
+    .drop:hover, .drop.over { border-color:var(--accent); }
+
+    .log { margin-top:1.2rem; background:var(--dark); color:#E8C49A; border-radius:10px; padding:1rem 1.2rem; font-family:monospace; font-size:.78rem; line-height:1.8; max-height:260px; overflow-y:auto; white-space:pre-wrap; }
+    .log:empty { display:none; }
+    .found-list { margin:.8rem 0; font-size:.83rem; color:#5c3d2e; background:var(--white); border:1px solid var(--border); border-radius:8px; padding:.8rem 1rem; }
+    .badge { display:inline-block; background:#2a7a3a; color:#fff; border-radius:20px; font-size:.72rem; padding:.15rem .6rem; margin-left:.4rem; }
+    @media(max-width:640px){ .panel{padding:1.2rem 1rem 3rem} }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div class="login-wrap" id="loginView">
+  <form class="login-card" id="loginForm">
+    <img src="assets/images/logo.png" alt="Encanto Rústico" />
+    <h1>Painel Administrativo</h1>
+    <label>Senha do administrador</label>
+    <input type="password" id="senha" autocomplete="current-password" required />
+    <label>Token do GitHub</label>
+    <input type="password" id="token" placeholder="github_pat_… ou ghp_…" />
+    <div class="hint">O token fica salvo apenas neste navegador. Crie um token com acesso de <strong>Contents (leitura e escrita)</strong> ao repositório do site em <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens</a>. Depois do primeiro login ele não precisa ser digitado de novo.</div>
+    <button class="btn full" type="submit">Entrar</button>
+    <div class="erro" id="loginErro"></div>
+  </form>
+</div>
+
+<!-- ══ PAINEL ══ -->
+<div id="painelView" class="hidden">
+  <div class="topbar">
+    <strong>ENCANTO RÚSTICO · Admin</strong>
+    <div class="acts">
+      <button onclick="window.open('index.html','_blank')">Ver site</button>
+      <button id="sairBtn">Sair</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="fotos">Trocar Fotos</button>
+    <button class="tab-btn" data-tab="novas">Adicionar Fotos</button>
+    <button class="tab-btn" data-tab="textos">Alterar Textos</button>
+  </div>
+
+  <div class="panel" id="tab-fotos">
+    <h2>Fotos do site</h2>
+    <div class="sub">Clique em <strong>Trocar</strong> e escolha a nova imagem. Ela substitui a antiga <strong>em todos os lugares do site</strong> onde aparece (cards, páginas de produto, banners). A mudança entra no ar em ~1–2 minutos.</div>
+    <div class="img-grid" id="imgGrid">Carregando…</div>
+    <div class="log" id="logFotos"></div>
+  </div>
+
+  <div class="panel hidden" id="tab-novas">
+    <h2>Adicionar fotos novas</h2>
+    <div class="sub">As fotos são enviadas para a pasta de imagens do site (<code>assets/images/</code>). Depois de enviadas, me peça para colocá-las nas páginas, ou use o nome do arquivo ao montar novos produtos.</div>
+    <div class="drop" id="dropZone">📷 Clique aqui ou arraste as fotos para enviar</div>
+    <input type="file" id="fileNovas" accept="image/*" multiple class="hidden" />
+    <div class="log" id="logNovas"></div>
+  </div>
+
+  <div class="panel hidden" id="tab-textos">
+    <h2>Alterar textos</h2>
+    <div class="sub">Digite o texto <strong>exatamente como aparece no site</strong> (pode copiar e colar da página), e o novo texto. A troca vale para todas as páginas onde o texto aparecer — serve para nome de produto, preço, descrição, horário, telefone etc.</div>
+    <label>Texto atual (como está no site)</label>
+    <textarea id="txtDe" rows="2"></textarea>
+    <label>Novo texto</label>
+    <textarea id="txtPara" rows="2"></textarea>
+    <div style="display:flex;gap:.7rem;margin-top:1.1rem;flex-wrap:wrap">
+      <button class="btn sec" id="btnBuscar">1 · Verificar onde aparece</button>
+      <button class="btn" id="btnTrocar" disabled>2 · Substituir e publicar</button>
+    </div>
+    <div class="found-list hidden" id="foundList"></div>
+    <div class="log" id="logTextos"></div>
+  </div>
+</div>
+
+<script>
+// ─── Configuração ────────────────────────────────────────
+const REPO = "ryanlopesx2024/encanto-rustico";
+const BRANCH = "master";
+// senha inicial: encanto2026  (hash SHA-256; para trocar a senha, gere outro hash e substitua aqui)
+const SENHA_HASH = "793d6ade2531393d95d96a25f66d3f81563dcfb808d9018963059747abd0d7a9";
+
+// ─── Helpers ─────────────────────────────────────────────
+const $ = (id) => document.getElementById(id);
+async function sha256(txt) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function ghToken() { return localStorage.getItem("er_gh_token") || ""; }
+async function gh(path, opts = {}) {
+  const res = await fetch("https://api.github.com/repos/" + REPO + path, {
+    ...opts,
+    headers: {
+      "Authorization": "Bearer " + ghToken(),
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(opts.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error("GitHub " + res.status + ": " + body.slice(0, 200));
+  }
+  return res.json();
+}
+function b64FromBytes(bytes) {
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000)
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+function bytesFromB64(b64) {
+  const bin = atob(b64.replace(/\n/g, ""));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+function fileToB64(file) {
+  return new Promise((ok, err) => {
+    const r = new FileReader();
+    r.onload = () => ok(r.result.split(",")[1]);
+    r.onerror = err;
+    r.readAsDataURL(file);
+  });
+}
+function log(el, msg) { el.textContent += msg + "\n"; el.scrollTop = el.scrollHeight; }
+
+// ─── Login ───────────────────────────────────────────────
+async function entrar(e) {
+  e.preventDefault();
+  $("loginErro").textContent = "";
+  const senhaOk = (await sha256($("senha").value)) === SENHA_HASH;
+  if (!senhaOk) { $("loginErro").textContent = "Senha incorreta."; return; }
+  const tok = $("token").value.trim();
+  if (tok) localStorage.setItem("er_gh_token", tok);
+  if (!ghToken()) { $("loginErro").textContent = "Informe o token do GitHub (primeiro acesso)."; return; }
+  try {
+    await gh("");
+  } catch (err) {
+    $("loginErro").textContent = "Token inválido ou sem acesso ao repositório.";
+    return;
+  }
+  sessionStorage.setItem("er_adm", "1");
+  mostrarPainel();
+}
+$("loginForm").addEventListener("submit", entrar);
+$("sairBtn") && $("sairBtn").addEventListener("click", () => {
+  sessionStorage.removeItem("er_adm");
+  location.reload();
+});
+
+function mostrarPainel() {
+  $("loginView").classList.add("hidden");
+  $("painelView").classList.remove("hidden");
+  carregarFotos();
+}
+if (sessionStorage.getItem("er_adm") === "1" && ghToken()) mostrarPainel();
+
+// ─── Abas ────────────────────────────────────────────────
+document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tab-btn").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  ["fotos", "novas", "textos"].forEach(t => $("tab-" + t).classList.toggle("hidden", t !== b.dataset.tab));
+}));
+
+// ─── Trocar fotos ────────────────────────────────────────
+let IMAGENS = [];
+async function carregarFotos() {
+  const grid = $("imgGrid");
+  grid.textContent = "Carregando…";
+  try {
+    IMAGENS = (await gh("/contents/assets/images?ref=" + BRANCH))
+      .filter(f => /\.(jpe?g|png|webp)$/i.test(f.name));
+  } catch (err) { grid.textContent = "Erro ao listar imagens: " + err.message; return; }
+  grid.innerHTML = "";
+  IMAGENS.forEach(img => {
+    const card = document.createElement("div");
+    card.className = "img-card";
+    card.innerHTML = '<img loading="lazy" src="assets/images/' + img.name + '" onerror="this.src=\'' + img.download_url + '\'" />' +
+      '<div class="nm">' + img.name + '</div><div class="row"><button>Trocar</button></div>';
+    card.querySelector("button").addEventListener("click", () => trocarFoto(img, card));
+    grid.appendChild(card);
+  });
+}
+function trocarFoto(img, card) {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = "image/*";
+  inp.onchange = async () => {
+    const file = inp.files[0];
+    if (!file) return;
+    const btn = card.querySelector("button");
+    btn.disabled = true; btn.textContent = "Enviando…";
+    try {
+      const content = await fileToB64(file);
+      const atual = await gh("/contents/assets/images/" + encodeURIComponent(img.name) + "?ref=" + BRANCH);
+      await gh("/contents/assets/images/" + encodeURIComponent(img.name), {
+        method: "PUT",
+        body: JSON.stringify({ message: "Admin: troca a foto " + img.name, content, sha: atual.sha, branch: BRANCH })
+      });
+      btn.textContent = "✔ Trocada!";
+      card.querySelector("img").src = URL.createObjectURL(file);
+      log($("logFotos"), "✔ " + img.name + " substituída. No ar em ~1–2 min.");
+    } catch (err) {
+      btn.textContent = "Trocar"; btn.disabled = false;
+      log($("logFotos"), "✖ Erro em " + img.name + ": " + err.message);
+    }
+  };
+  inp.click();
+}
+
+// ─── Adicionar fotos ─────────────────────────────────────
+const drop = $("dropZone"), fileNovas = $("fileNovas");
+drop.addEventListener("click", () => fileNovas.click());
+drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); enviarNovas(e.dataTransfer.files); });
+fileNovas.addEventListener("change", () => enviarNovas(fileNovas.files));
+
+async function enviarNovas(files) {
+  for (const file of files) {
+    const nome = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g, "-");
+    log($("logNovas"), "Enviando " + nome + "…");
+    try {
+      const content = await fileToB64(file);
+      let path = "assets/images/" + nome, sha;
+      try { sha = (await gh("/contents/" + path + "?ref=" + BRANCH)).sha; } catch (e) { /* não existe ainda */ }
+      if (sha) path = "assets/images/" + Date.now() + "-" + nome;
+      await gh("/contents/" + path, {
+        method: "PUT",
+        body: JSON.stringify({ message: "Admin: adiciona foto " + path.split("/").pop(), content, branch: BRANCH })
+      });
+      log($("logNovas"), "✔ " + path.split("/").pop() + " enviada.");
+    } catch (err) {
+      log($("logNovas"), "✖ Erro em " + nome + ": " + err.message);
+    }
+  }
+  if (files.length) log($("logNovas"), "Concluído. As fotos já estão na pasta do site.");
+}
+
+// ─── Alterar textos ──────────────────────────────────────
+let ARQUIVOS_ALVO = null, ENCONTRADOS = [];
+async function listarArquivosTexto() {
+  if (ARQUIVOS_ALVO) return ARQUIVOS_ALVO;
+  const raiz = await gh("/contents/?ref=" + BRANCH);
+  ARQUIVOS_ALVO = raiz.filter(f => f.type === "file" && /\.html$/.test(f.name) && f.name !== "admin.html").map(f => f.path);
+  ARQUIVOS_ALVO.push("assets/base.js", "assets/search.js");
+  return ARQUIVOS_ALVO;
+}
+async function lerArquivo(path) {
+  const f = await gh("/contents/" + path + "?ref=" + BRANCH);
+  return { sha: f.sha, texto: new TextDecoder().decode(bytesFromB64(f.content)) };
+}
+$("btnBuscar").addEventListener("click", async () => {
+  const de = $("txtDe").value;
+  const lg = $("logTextos"); lg.textContent = "";
+  $("btnTrocar").disabled = true; ENCONTRADOS = [];
+  if (de.length < 3) { log(lg, "✖ Digite pelo menos 3 caracteres."); return; }
+  $("foundList").classList.add("hidden");
+  log(lg, "Procurando…");
+  try {
+    for (const path of await listarArquivosTexto()) {
+      const { sha, texto } = await lerArquivo(path);
+      const n = texto.split(de).length - 1;
+      if (n > 0) ENCONTRADOS.push({ path, sha, texto, n });
+    }
+  } catch (err) { log(lg, "✖ " + err.message); return; }
+  lg.textContent = "";
+  const fl = $("foundList");
+  if (!ENCONTRADOS.length) {
+    fl.innerHTML = "Nenhuma página contém esse texto. Confira maiúsculas, acentos e espaços (copie e cole direto do site).";
+  } else {
+    fl.innerHTML = "Encontrado em:<br>" + ENCONTRADOS.map(f => "• " + f.path + ' <span class="badge">' + f.n + "×</span>").join("<br>");
+    $("btnTrocar").disabled = false;
+  }
+  fl.classList.remove("hidden");
+});
+$("btnTrocar").addEventListener("click", async () => {
+  const de = $("txtDe").value, para = $("txtPara").value;
+  const lg = $("logTextos");
+  if (!ENCONTRADOS.length) return;
+  if (!para) { log(lg, "✖ Digite o novo texto."); return; }
+  $("btnTrocar").disabled = true;
+  for (const f of ENCONTRADOS) {
+    try {
+      const novo = f.texto.split(de).join(para);
+      await gh("/contents/" + f.path, {
+        method: "PUT",
+        body: JSON.stringify({
+          message: "Admin: altera texto em " + f.path,
+          content: b64FromBytes(new TextEncoder().encode(novo)),
+          sha: f.sha, branch: BRANCH
+        })
+      });
+      log(lg, "✔ " + f.path + " atualizado (" + f.n + "×).");
+    } catch (err) { log(lg, "✖ " + f.path + ": " + err.message); }
+  }
+  log(lg, "Concluído. No ar em ~1–2 minutos.");
+  ENCONTRADOS = []; $("foundList").classList.add("hidden");
+});
+</script>
+</body>
+</html>
