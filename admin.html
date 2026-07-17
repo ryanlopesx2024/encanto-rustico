@@ -67,11 +67,15 @@
   <form class="login-card" id="loginForm">
     <img src="assets/images/logo.png" alt="Encanto Rústico" />
     <h1>Painel Administrativo</h1>
-    <label>Senha do administrador</label>
+    <label>E-mail</label>
+    <input type="text" id="email" autocomplete="username" placeholder="seu e-mail" required />
+    <label>Senha</label>
     <input type="password" id="senha" autocomplete="current-password" required />
-    <label>Token do GitHub</label>
-    <input type="password" id="token" placeholder="github_pat_… ou ghp_…" />
-    <div class="hint">O token fica salvo apenas neste navegador. Crie um token com acesso de <strong>Contents (leitura e escrita)</strong> ao repositório do site em <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens</a>. Depois do primeiro login ele não precisa ser digitado de novo.</div>
+    <div id="tokenWrap">
+      <label>Token do GitHub (só no primeiro acesso)</label>
+      <input type="password" id="token" placeholder="github_pat_… ou ghp_…" />
+      <div class="hint">O token fica salvo apenas neste navegador. Crie um token com acesso de <strong>Contents (leitura e escrita)</strong> ao repositório do site em <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens</a>. Depois do primeiro login ele não precisa ser digitado de novo.</div>
+    </div>
     <button class="btn full" type="submit">Entrar</button>
     <div class="erro" id="loginErro"></div>
   </form>
@@ -127,8 +131,9 @@
 // ─── Configuração ────────────────────────────────────────
 const REPO = "ryanlopesx2024/encanto-rustico";
 const BRANCH = "master";
-// senha inicial: encanto2026  (hash SHA-256; para trocar a senha, gere outro hash e substitua aqui)
-const SENHA_HASH = "793d6ade2531393d95d96a25f66d3f81563dcfb808d9018963059747abd0d7a9";
+// acesso: e-mail + senha (hash SHA-256 da senha; para trocar, gere outro hash e substitua aqui)
+const ADMIN_EMAIL = "adm@gmail.com";
+const SENHA_HASH = "55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251";
 
 // ─── Helpers ─────────────────────────────────────────────
 const $ = (id) => document.getElementById(id);
@@ -179,8 +184,9 @@ function log(el, msg) { el.textContent += msg + "\n"; el.scrollTop = el.scrollHe
 async function entrar(e) {
   e.preventDefault();
   $("loginErro").textContent = "";
+  const emailOk = $("email").value.trim().toLowerCase() === ADMIN_EMAIL;
   const senhaOk = (await sha256($("senha").value)) === SENHA_HASH;
-  if (!senhaOk) { $("loginErro").textContent = "Senha incorreta."; return; }
+  if (!emailOk || !senhaOk) { $("loginErro").textContent = "E-mail ou senha incorretos."; return; }
   const tok = $("token").value.trim();
   if (tok) localStorage.setItem("er_gh_token", tok);
   if (!ghToken()) { $("loginErro").textContent = "Informe o token do GitHub (primeiro acesso)."; return; }
@@ -205,6 +211,7 @@ function mostrarPainel() {
   carregarFotos();
 }
 if (sessionStorage.getItem("er_adm") === "1" && ghToken()) mostrarPainel();
+if (ghToken()) $("tokenWrap").classList.add("hidden");
 
 // ─── Abas ────────────────────────────────────────────────
 document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => {
