@@ -91,12 +91,21 @@
     </div>
   </div>
   <div class="tabs">
-    <button class="tab-btn active" data-tab="fotos">Trocar Fotos</button>
+    <button class="tab-btn active" data-tab="produtos">Produtos</button>
+    <button class="tab-btn" data-tab="fotos">Trocar Fotos</button>
     <button class="tab-btn" data-tab="novas">Adicionar Fotos</button>
     <button class="tab-btn" data-tab="textos">Alterar Textos</button>
   </div>
 
-  <div class="panel" id="tab-fotos">
+  <div class="panel" id="tab-produtos">
+    <h2>Produtos</h2>
+    <div class="sub">Cada produto do site com sua foto e nome. <strong>Trocar foto</strong> substitui a imagem do produto; o campo de texto muda o <strong>nome que aparece no card e na página do produto</strong> (clique em Salvar nome). No ar em ~1–2 minutos.</div>
+    <input type="text" id="prodBusca" placeholder="🔎 Filtrar produtos pelo nome…" style="margin-bottom:1rem" />
+    <div class="img-grid" id="prodGrid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">Carregando…</div>
+    <div class="log" id="logProdutos"></div>
+  </div>
+
+  <div class="panel hidden" id="tab-fotos">
     <h2>Fotos do site</h2>
     <div class="sub">Clique em <strong>Trocar</strong> e escolha a nova imagem. Ela substitui a antiga <strong>em todos os lugares do site</strong> onde aparece (cards, páginas de produto, banners). A mudança entra no ar em ~1–2 minutos.</div>
     <div class="img-grid" id="imgGrid">Carregando…</div>
@@ -208,6 +217,7 @@ $("sairBtn") && $("sairBtn").addEventListener("click", () => {
 function mostrarPainel() {
   $("loginView").classList.add("hidden");
   $("painelView").classList.remove("hidden");
+  carregarProdutos();
   carregarFotos();
 }
 if (sessionStorage.getItem("er_adm") === "1" && ghToken()) mostrarPainel();
@@ -217,8 +227,95 @@ if (ghToken()) $("tokenWrap").classList.add("hidden");
 document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll(".tab-btn").forEach(x => x.classList.remove("active"));
   b.classList.add("active");
-  ["fotos", "novas", "textos"].forEach(t => $("tab-" + t).classList.toggle("hidden", t !== b.dataset.tab));
+  ["produtos", "fotos", "novas", "textos"].forEach(t => $("tab-" + t).classList.toggle("hidden", t !== b.dataset.tab));
 }));
+
+// ─── Produtos (foto + nome) ──────────────────────────────
+let PRODUTOS = [];
+async function carregarProdutos() {
+  const grid = $("prodGrid");
+  try {
+    const { texto } = await lerArquivo("assets/search.js");
+    const m = texto.match(/var INDEX = (\[.*?\]);\n/s);
+    PRODUTOS = JSON.parse(m[1]);
+  } catch (err) { grid.textContent = "Erro ao carregar produtos: " + err.message; return; }
+  grid.innerHTML = "";
+  PRODUTOS.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "img-card";
+    card.dataset.titulo = p.t.toLowerCase();
+    card.innerHTML =
+      '<img loading="lazy" src="' + p.i + '" />' +
+      '<div class="row" style="padding-bottom:.3rem"><button class="bt-foto">📷 Trocar foto</button></div>' +
+      '<div style="padding:.2rem .6rem"><textarea rows="3" style="font-size:.78rem">' + p.t + "</textarea></div>" +
+      '<div class="row"><button class="bt-nome">💾 Salvar nome</button></div>';
+    card.querySelector(".bt-foto").addEventListener("click", () => trocarFotoProduto(p, card));
+    card.querySelector(".bt-nome").addEventListener("click", () => salvarNomeProduto(p, card));
+    grid.appendChild(card);
+  });
+}
+$("prodBusca").addEventListener("input", () => {
+  const q = $("prodBusca").value.toLowerCase();
+  document.querySelectorAll("#prodGrid .img-card").forEach(c =>
+    c.classList.toggle("hidden", !c.dataset.titulo.includes(q)));
+});
+function trocarFotoProduto(p, card) {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = "image/*";
+  inp.onchange = async () => {
+    const file = inp.files[0];
+    if (!file) return;
+    const btn = card.querySelector(".bt-foto");
+    btn.disabled = true; btn.textContent = "Enviando…";
+    try {
+      const content = await fileToB64(file);
+      const atual = await gh("/contents/" + p.i + "?ref=" + BRANCH);
+      await gh("/contents/" + p.i, {
+        method: "PUT",
+        body: JSON.stringify({ message: "Admin: troca a foto de " + p.t, content, sha: atual.sha, branch: BRANCH })
+      });
+      btn.textContent = "✔ Foto trocada!"; btn.disabled = false;
+      card.querySelector("img").src = URL.createObjectURL(file);
+      log($("logProdutos"), "✔ Foto de “" + p.t + "” substituída. No ar em ~1–2 min.");
+    } catch (err) {
+      btn.textContent = "📷 Trocar foto"; btn.disabled = false;
+      log($("logProdutos"), "✖ Erro na foto de “" + p.t + "”: " + err.message);
+    }
+  };
+  inp.click();
+}
+async function salvarNomeProduto(p, card) {
+  const novo = card.querySelector("textarea").value.trim();
+  const btn = card.querySelector(".bt-nome");
+  const lg = $("logProdutos");
+  if (!novo || novo === p.t) { log(lg, "Nome de “" + p.t + "” não mudou."); return; }
+  if (PRODUTOS.some(x => x !== p && x.t === novo)) { log(lg, "✖ Já existe um produto com esse nome."); return; }
+  btn.disabled = true; btn.textContent = "Salvando…";
+  let trocas = 0;
+  try {
+    for (const path of await listarArquivosTexto()) {
+      const { sha, texto } = await lerArquivo(path);
+      if (!texto.includes(p.t)) continue;
+      const novoTexto = texto.split(p.t).join(novo);
+      await gh("/contents/" + path, {
+        method: "PUT",
+        body: JSON.stringify({
+          message: "Admin: renomeia produto para “" + novo + "”",
+          content: b64FromBytes(new TextEncoder().encode(novoTexto)),
+          sha, branch: BRANCH
+        })
+      });
+      trocas++;
+    }
+    log(lg, "✔ Nome atualizado em " + trocas + " arquivo(s): “" + p.t + "” → “" + novo + "”. No ar em ~1–2 min.");
+    p.t = novo; card.dataset.titulo = novo.toLowerCase();
+    btn.textContent = "✔ Salvo!";
+    setTimeout(() => { btn.textContent = "💾 Salvar nome"; btn.disabled = false; }, 1500);
+  } catch (err) {
+    log(lg, "✖ Erro ao renomear: " + err.message);
+    btn.textContent = "💾 Salvar nome"; btn.disabled = false;
+  }
+}
 
 // ─── Trocar fotos ────────────────────────────────────────
 let IMAGENS = [];
