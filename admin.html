@@ -87,9 +87,11 @@
     <strong>ENCANTO RÚSTICO · Admin</strong>
     <div class="acts">
       <button onclick="window.open('index.html','_blank')">Ver site</button>
+      <button id="tokenBtn">Trocar token</button>
       <button id="sairBtn">Sair</button>
     </div>
   </div>
+  <div id="permAviso" class="hidden" style="background:#c0392b;color:#fff;padding:.8rem 1.5rem;font-size:.85rem;line-height:1.5"></div>
   <div class="tabs">
     <button class="tab-btn active" data-tab="produtos">Produtos</button>
     <button class="tab-btn" data-tab="fotos">Trocar Fotos</button>
@@ -200,8 +202,16 @@ async function entrar(e) {
   if (tok) localStorage.setItem("er_gh_token", tok);
   if (!ghToken()) { $("loginErro").textContent = "Informe o token do GitHub (primeiro acesso)."; return; }
   try {
-    await gh("");
+    const repo = await gh("");
+    if (!repo.permissions || !repo.permissions.push) {
+      localStorage.removeItem("er_gh_token");
+      $("tokenWrap").classList.remove("hidden");
+      $("loginErro").textContent = "Este token conecta, mas NÃO tem permissão de escrita — por isso nada é salvo. Crie o token com: Only select repositories → encanto-rustico, e permissão Contents → Read and write.";
+      return;
+    }
   } catch (err) {
+    localStorage.removeItem("er_gh_token");
+    $("tokenWrap").classList.remove("hidden");
     $("loginErro").textContent = "Token inválido ou sem acesso ao repositório.";
     return;
   }
@@ -214,12 +224,36 @@ $("sairBtn") && $("sairBtn").addEventListener("click", () => {
   location.reload();
 });
 
+function errMsg(err) {
+  if (/403|404|Resource not accessible|Not Found/i.test(err.message))
+    return "sem permissão de ESCRITA no repositório. Clique em “Trocar token” e use um token com Contents → Read and write no repositório encanto-rustico.";
+  return err.message;
+}
+async function checarEscrita() {
+  try {
+    const repo = await gh("");
+    const ok = repo.permissions && repo.permissions.push;
+    $("permAviso").classList.toggle("hidden", !!ok);
+    if (!ok) $("permAviso").textContent = "⚠️ O token salvo neste navegador NÃO tem permissão de escrita — as alterações não serão salvas. Clique em “Trocar token” (canto superior direito) e cole um token criado com: Only select repositories → encanto-rustico, permissão Contents → Read and write.";
+  } catch (e) {
+    $("permAviso").classList.remove("hidden");
+    $("permAviso").textContent = "⚠️ Token inválido ou expirado — as alterações não serão salvas. Clique em “Trocar token”.";
+  }
+}
 function mostrarPainel() {
   $("loginView").classList.add("hidden");
   $("painelView").classList.remove("hidden");
+  checarEscrita();
   carregarProdutos();
   carregarFotos();
 }
+$("tokenBtn").addEventListener("click", async () => {
+  const t = prompt("Cole o novo token do GitHub (crie em github.com/settings/personal-access-tokens com Contents → Read and write no repositório encanto-rustico):");
+  if (!t) return;
+  localStorage.setItem("er_gh_token", t.trim());
+  await checarEscrita();
+  if ($("permAviso").classList.contains("hidden")) alert("Token válido com permissão de escrita! ✔");
+});
 if (sessionStorage.getItem("er_adm") === "1" && ghToken()) mostrarPainel();
 if (ghToken()) $("tokenWrap").classList.add("hidden");
 
@@ -279,7 +313,7 @@ function trocarFotoProduto(p, card) {
       log($("logProdutos"), "✔ Foto de “" + p.t + "” substituída. No ar em ~1–2 min.");
     } catch (err) {
       btn.textContent = "📷 Trocar foto"; btn.disabled = false;
-      log($("logProdutos"), "✖ Erro na foto de “" + p.t + "”: " + err.message);
+      log($("logProdutos"), "✖ Erro na foto de “" + p.t + "”: " + errMsg(err));
     }
   };
   inp.click();
@@ -312,7 +346,7 @@ async function salvarNomeProduto(p, card) {
     btn.textContent = "✔ Salvo!";
     setTimeout(() => { btn.textContent = "💾 Salvar nome"; btn.disabled = false; }, 1500);
   } catch (err) {
-    log(lg, "✖ Erro ao renomear: " + err.message);
+    log(lg, "✖ Erro ao renomear: " + errMsg(err));
     btn.textContent = "💾 Salvar nome"; btn.disabled = false;
   }
 }
@@ -356,7 +390,7 @@ function trocarFoto(img, card) {
       log($("logFotos"), "✔ " + img.name + " substituída. No ar em ~1–2 min.");
     } catch (err) {
       btn.textContent = "Trocar"; btn.disabled = false;
-      log($("logFotos"), "✖ Erro em " + img.name + ": " + err.message);
+      log($("logFotos"), "✖ Erro em " + img.name + ": " + errMsg(err));
     }
   };
   inp.click();
@@ -385,7 +419,7 @@ async function enviarNovas(files) {
       });
       log($("logNovas"), "✔ " + path.split("/").pop() + " enviada.");
     } catch (err) {
-      log($("logNovas"), "✖ Erro em " + nome + ": " + err.message);
+      log($("logNovas"), "✖ Erro em " + nome + ": " + errMsg(err));
     }
   }
   if (files.length) log($("logNovas"), "Concluído. As fotos já estão na pasta do site.");
@@ -446,7 +480,7 @@ $("btnTrocar").addEventListener("click", async () => {
         })
       });
       log(lg, "✔ " + f.path + " atualizado (" + f.n + "×).");
-    } catch (err) { log(lg, "✖ " + f.path + ": " + err.message); }
+    } catch (err) { log(lg, "✖ " + f.path + ": " + errMsg(err)); }
   }
   log(lg, "Concluído. No ar em ~1–2 minutos.");
   ENCONTRADOS = []; $("foundList").classList.add("hidden");
