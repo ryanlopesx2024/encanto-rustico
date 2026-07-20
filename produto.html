@@ -238,6 +238,11 @@
     .shipping-error { color: #c0392b; font-size: .82rem; padding: .5rem; }
     .free-shipping { background: rgba(42,122,58,.1); border-color: rgba(42,122,58,.3); }
     .free-shipping .shipping-price { color: #2a7a3a; }
+    .me-badge { margin-left:auto; font-size:.62rem; font-weight:700; letter-spacing:.03em; color:#00bfa5; background:rgba(0,191,165,.12); padding:.15rem .5rem; border-radius:20px; text-transform:uppercase; }
+    .shipping-option { gap:.7rem; }
+    .carrier-logo { width:34px; height:34px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.68rem; font-weight:800; color:#fff; flex-shrink:0; letter-spacing:-.02em; }
+    .shipping-option .sr-mid { flex:1; }
+    .shipping-disclaimer { font-size:.68rem; color:#9e7f68; margin-top:.6rem; line-height:1.5; }
 
     /* Relacionados */
     .related-section { background: var(--warm); padding: 3rem 1.5rem; }
@@ -317,6 +322,17 @@
         <div class="feature-item"><span class="icon">🛡️</span> Garantia de 2 anos</div>
         <div class="feature-item"><span class="icon">🚚</span> Entrega em todo Brasil</div>
         <div class="feature-item"><span class="icon">✏️</span> Personalização grátis</div>
+      </div>
+
+      <!-- Simulação de frete -->
+      <div class="shipping-calc">
+        <h4>🚚 Calcular Frete <span class="me-badge">Simulação · Melhor Envio</span></h4>
+        <div class="cep-row">
+          <input class="cep-input" id="cepInput" type="text" placeholder="00000-000" maxlength="9" inputmode="numeric" />
+          <button class="cep-btn" id="calcFrete">Calcular</button>
+        </div>
+        <div class="shipping-results" id="shippingResults"></div>
+        <div class="shipping-disclaimer">Valores e prazos são uma simulação com base na região de entrega. O frete exato é confirmado com nossa equipe pelo WhatsApp antes do fechamento do pedido.</div>
       </div>
 
       <div class="cta-group">
@@ -596,6 +612,95 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById('tab-' + this.dataset.tab).classList.add('active');
   });
 });
+
+// ══════════════════════════════════════════════════════════
+//  SIMULAÇÃO DE FRETE (estilo Melhor Envio) — apenas estimativa,
+//  não é uma cotação real via API (o site é estático e não tem
+//  como guardar credenciais de API com segurança).
+// ══════════════════════════════════════════════════════════
+(function () {
+  const cepInput = document.getElementById('cepInput');
+  const calcBtn  = document.getElementById('calcFrete');
+  const results  = document.getElementById('shippingResults');
+  if (!cepInput || !calcBtn) return;
+
+  // dias/preço-base por UF (referência aproximada; SP é a origem da loja)
+  const BASE = {
+    SP:[3,1],RJ:[4,2],MG:[4,2],ES:[5,2],PR:[5,2],SC:[6,3],RS:[7,3],
+    MS:[7,3],MT:[8,4],GO:[7,3],DF:[6,3],BA:[8,4],SE:[8,4],AL:[9,4],
+    PE:[9,5],PB:[9,5],RN:[10,5],CE:[10,5],PI:[10,5],MA:[11,5],
+    PA:[12,6],AP:[13,6],TO:[9,4],RO:[11,5],AC:[13,6],RR:[14,7],AM:[13,6]
+  };
+  const CARRIERS = [
+    { id:'correios-pac',  name:'Correios PAC',    logo:'CP', color:'#0057a8', mult:1.00, speed:1.00 },
+    { id:'jadlog-package',name:'Jadlog .Package', logo:'JL', color:'#c0392b', mult:0.92, speed:0.85 },
+    { id:'jadlog-com',    name:'Jadlog .Com',     logo:'JL', color:'#8e2f22', mult:1.35, speed:0.55 },
+    { id:'correios-sedex',name:'Correios SEDEX',  logo:'CS', color:'#00a651', mult:1.85, speed:0.45 },
+  ];
+  const FREE_SHIPPING_MIN = 2000;
+  const productValue = (function () {
+    const el = document.querySelector('.main-price');
+    if (!el) return 0;
+    return parseFloat(el.textContent.replace(/[^\d,]/g,'').replace(',','.')) || 0;
+  })();
+
+  function formatCEP(v) { return v.replace(/\D/g,'').replace(/(\d{5})(\d)/,'$1-$2').slice(0,9); }
+  cepInput.addEventListener('input', () => { cepInput.value = formatCEP(cepInput.value); });
+  cepInput.addEventListener('keydown', e => { if (e.key === 'Enter') calcBtn.click(); });
+
+  function showLoading() {
+    results.classList.add('show');
+    results.innerHTML = '<div class="shipping-loading">🔍 Simulando frete com as transportadoras…</div>';
+  }
+  function showError(msg) {
+    results.classList.add('show');
+    results.innerHTML = `<div class="shipping-error">⚠️ ${msg}</div>`;
+  }
+  function showOptions(addr, uf) {
+    const [baseDays, baseCost] = BASE[uf] || [10, 5];
+    // pequena variação "aleatória" determinística por CEP, pra parecer uma cotação real
+    const seed = (addr.cep || '').split('').reduce((a,c) => a + c.charCodeAt(0), 0);
+    const wiggle = (seed % 7) / 10; // 0.0–0.6
+
+    const rows = CARRIERS.map(c => {
+      const days = Math.max(1, Math.round(baseDays * c.speed));
+      let price = (baseCost + wiggle) * 22 * c.mult;
+      const free = productValue >= FREE_SHIPPING_MIN && c.id === 'correios-pac';
+      return { ...c, days, price: free ? 0 : price, free };
+    }).sort((a,b) => a.price - b.price);
+
+    results.innerHTML = rows.map(r => `
+      <div class="shipping-option ${r.free ? 'free-shipping' : ''}">
+        <div class="carrier-logo" style="background:${r.color}">${r.logo}</div>
+        <div class="sr-mid">
+          <div class="shipping-name">${r.name}</div>
+          <div class="shipping-days">Até ${r.days} dia${r.days === 1 ? '' : 's'} ${r.days === 1 ? 'útil' : 'úteis'} após produção</div>
+        </div>
+        <div class="shipping-price">${r.free ? '🎉 GRÁTIS' : 'R$ ' + r.price.toFixed(2).replace('.', ',')}</div>
+      </div>`).join('') +
+      `<div class="shipping-address">📍 Entregando para: <strong>${addr.localidade}/${uf}</strong>
+        <br>⚠️ Prazo conta a partir da produção (15–25 dias úteis).</div>`;
+    results.classList.add('show');
+  }
+
+  calcBtn.addEventListener('click', async () => {
+    const raw = cepInput.value.replace(/\D/g, '');
+    if (raw.length !== 8) { showError('CEP inválido. Digite os 8 dígitos.'); return; }
+    calcBtn.disabled = true; calcBtn.textContent = '…';
+    showLoading();
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
+      const data = await res.json();
+      if (data.erro) { showError('CEP não encontrado. Verifique e tente novamente.'); return; }
+      data.cep = raw;
+      showOptions(data, data.uf);
+    } catch (e) {
+      showError('Não foi possível simular agora. Tente novamente ou fale com a gente pelo WhatsApp.');
+    } finally {
+      calcBtn.disabled = false; calcBtn.textContent = 'Calcular';
+    }
+  });
+})();
 
 // ══════════════════════════════════════════════════════════
 //  ROOM VISUALIZER 2.0 — planta baixa com móveis em SVG
