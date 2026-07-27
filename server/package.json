@@ -1,0 +1,15 @@
+{
+  "name": "encanto-rustico-frete",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proxy seguro para a API dos Correios (Preço e Prazo) usado pelo site Encanto Rústico",
+  "main": "index.js",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}
