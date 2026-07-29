@@ -32,7 +32,7 @@
     <div class="filters" id="filtersPanel">
       <h3>🔎 Filtrar</h3>
       <div class="filter-group"><h4>Categoria</h4>
-        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">10</span></div>
+        <div class="filter-option"><input type="checkbox" checked /><label>Todos</label><span class="count">11</span></div>
         <div class="filter-option"><input type="checkbox" /><label>Quadros</label><span class="count">4</span></div>
         <div class="filter-option"><input type="checkbox" /><label>Painéis</label><span class="count">3</span></div>
         <div class="filter-option"><input type="checkbox" /><label>Acessórios</label><span class="count">1</span></div>
@@ -46,7 +46,7 @@
 
   <div class="catalog-main">
     <div class="catalog-toolbar reveal">
-      <div class="catalog-count"><strong>10 produtos</strong> encontrados</div>
+      <div class="catalog-count"><strong>11 produtos</strong> encontrados</div>
       <div style="display:flex;align-items:center;gap:.8rem">
         <div class="catalog-sort"><span style="font-size:.8rem;color:#7a5f4e">Ordenar:</span><select><option>Mais Vendidos</option><option>Menor Preço</option><option>Maior Preço</option></select></div>
         <div class="catalog-view-btns"><button class="catalog-view-btn active" id="viewGrid">⊞</button><button class="catalog-view-btn" id="viewList">☰</button></div>
@@ -54,6 +54,11 @@
     </div>
 
     <div class="product-grid">
+      <div class="product-card reveal">
+        <div class="product-card-image" style="cursor:pointer" onclick="window.location='produto.html?p=teste2-apagar-depois'"><img src="assets/images/teste2-apagar-depois.png" alt="TESTE2 APAGAR DEPOIS" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html?p=teste2-apagar-depois'">👁</button></div></div>
+        <div class="product-info"><div class="category">TESTE ADMIN</div><h3>TESTE2 APAGAR DEPOIS</h3><div class="materials">Teste 2 Â· apagar</div><div class="product-price">R$ 999,00<span class="installments">12x de R$ 83,25 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html?p=teste2-apagar-depois'">Ver Produto</button></div>
+      </div>
+
       <div class="product-card reveal">
         <div class="product-card-image" style="cursor:pointer" onclick="window.location='produto.html?p=teste-admin-apagar-depois'"><img src="assets/images/teste-admin-apagar-depois.png" alt="TESTE ADMIN APAGAR DEPOIS" /><span class="product-badge novo">Novidade</span><div class="product-actions"><button class="product-action-btn">❤</button><button class="product-action-btn" onclick="window.location='produto.html?p=teste-admin-apagar-depois'">👁</button></div></div>
         <div class="product-info"><div class="category">TESTE ADMIN</div><h3>TESTE ADMIN APAGAR DEPOIS</h3><div class="materials">Teste automatizado Â· apagar</div><div class="product-price">R$ 1.234,00<span class="installments">12x de R$ 102,83 sem juros</span></div><button class="product-btn" onclick="window.location='produto.html?p=teste-admin-apagar-depois'">Ver Produto</button></div>
