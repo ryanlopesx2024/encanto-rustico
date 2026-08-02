@@ -41,7 +41,20 @@ R$4.388,00 à vista
 
 Cada cadeira
 R$389,00 (12x sem juros)
-R$342,00 à vista","c":"Mesa de Jantar","i":"assets/images/IMG_20251222_102006_711.jpg","p":"R$ 4.290,00","m":"Madeira Maciça · Verniz Natural · Ø 160cm","n":"12x de R$ 357,50 sem juros","u":"mesas.html"},{"s":"mesa-redonda-com-8-cadeiras-base-ripada-madeira-macica","t":"Mesa Redonda com 8 Cadeiras – Base Ripada, Madeira Maciça","c":"Mesa de Jantar","i":"assets/images/IMG_20251222_102008_693.jpg","p":"R$ 4.290,00","m":"Madeira Maciça · Verniz Natural · Ø 160cm","n":"12x de R$ 357,50 sem juros","u":"mesas.html"},{"s":"mesa-de-jantar-com-8-cadeiras-windsor-pes-torneados","t":"Conjunto Mesa Redonda 100% Madeira Maciça (2.00 de diâmetro) com 10 cadeiras
+R$342,00 à vista","c":"Mesa de Jantar","i":"assets/images/IMG_20251222_102006_711.jpg","p":"R$ 4.290,00","m":"Madeira Maciça · Verniz Natural · Ø 160cm","n":"12x de R$ 357,50 sem juros","u":"mesas.html"},{"s":"mesa-redonda-com-8-cadeiras-base-ripada-madeira-macica","t":"Conjunto Mesa Redonda 100% Madeira Maciça (1.80 de diâmetro) com 8 cadeiras
+
+CONJUNTO:
+R$9.559,00 (12x sem juros)
+R$8.398,00 à vista
+
+(Valor unitário):
+Só a mesa 
+R$6.990,00 (12x sem juros)
+R$6.148,00 à vista
+
+Cada cadeira
+R$409,00 (12x sem juros)
+R$359,00 à vista","c":"Mesa de Jantar","i":"assets/images/IMG_20251222_102008_693.jpg","p":"R$ 4.290,00","m":"Madeira Maciça · Verniz Natural · Ø 160cm","n":"12x de R$ 357,50 sem juros","u":"mesas.html"},{"s":"mesa-de-jantar-com-8-cadeiras-windsor-pes-torneados","t":"Conjunto Mesa Redonda 100% Madeira Maciça (2.00 de diâmetro) com 10 cadeiras
 
 CONJUNTO:
 R$10.990,00 (12x sem juros)
